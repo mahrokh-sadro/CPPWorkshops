@@ -161,39 +161,56 @@ namespace sdds {
 
 
 
-	bool Bill::add(const char* item_name, double price, bool taxed)
-	{
-		bool flag = false;
-		//If the number of added Items(m_itemsAdded) is less than the length of the m_items array,
-		if ((m_itemsAdded < m_noOfItems)) {
-			//  this function  will set the next available subject to the incoming argument values.Then it will add
-			//	one to the  m_itemsAdded and return true;
+// 	bool Bill::add(const char* item_name, double price, bool taxed)
+// 	{
+// 		bool flag = false;
+// 		//If the number of added Items(m_itemsAdded) is less than the length of the m_items array,
+// 		if ((m_itemsAdded < m_noOfItems)) {
+// 			//  this function  will set the next available subject to the incoming argument values.Then it will add
+// 			//	one to the  m_itemsAdded and return true;
 
-				//finding the next availale subject in m_items array
-			int i;
-			int index = 0; //fist empty index in m_items array
-			for (i = 0; i < m_noOfItems; i++) {
-				if (!m_items[i].isValid()) {  //if m_items[i] is empty
-					index = i;             //save the index number
-					i = m_noOfItems;       //end the loop
-				}
-			}
-			//char m_itemName[21];   
-			//double m_price;
-			//bool m_taxed;       we cant change these directly, we need to acces them using functions
-			m_items[index].set(item_name, price, taxed);  //set doesnt cover nullptr
+// 				//finding the next availale subject in m_items array
+// 			int i;
+// 			int index = 0; //fist empty index in m_items array
+// 			for (i = 0; i < m_noOfItems; i++) {
+// 				if (!m_items[i].isValid()) {  //if m_items[i] is empty
+// 					index = i;             //save the index number
+// 					i = m_noOfItems;       //end the loop
+// 				}
+// 			}
+// 			//char m_itemName[21];   
+// 			//double m_price;
+// 			//bool m_taxed;       we cant change these directly, we need to acces them using functions
+// 			m_items[index].set(item_name, price, taxed);  //set doesnt cover nullptr
 		    
-			//add one to the  m_itemsAdded 
-			m_itemsAdded += 1;
-			flag = true;
+// 			//add one to the  m_itemsAdded 
+// 			m_itemsAdded += 1;
+// 			flag = true;
 
-		}
-		//if(!item_name)  flag = false;
-		//Otherwise, this function will do nothing, returning false;
-		else  flag = false;
-		return flag;
+// 		}
+// 		//if(!item_name)  flag = false;
+// 		//Otherwise, this function will do nothing, returning false;
+// 		else  flag = false;
+// 		return flag;
 	
-		//return false;
+// 		//return false;
+// 	}
+	
+	bool Bill::add(const char* item_name, double price, bool taxed) {
+		bool ok = false;
+		//If the number of added Items(m_itemsAdded) is less than the length of the m_items array,
+		if (m_itemsAdded < m_noOfItems) {
+			int i;
+			for (i = 0; i < m_noOfItems; i++) {		
+					m_items[m_itemsAdded].set(item_name, price, taxed);				
+			}
+			m_itemsAdded += 1;
+			ok = true;
+		}
+		else ok = false;
+		
+		return ok;
+
 	}
 
 
