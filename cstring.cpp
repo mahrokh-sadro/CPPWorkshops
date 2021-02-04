@@ -1,15 +1,11 @@
 #include "cstring.h"
 namespace sdds {
-  
+    // written by Fardad. 
     void strnCpy(char* des, const char* src, int len) {
-
         int i;
-        int count = 0; //to count the number of characters of destination string
-        for (i = 0; i < len; i++) {   //len-1 does not work
+        for (i = 0; src[i] &&  i < len; i++) {   
             des[i] = src[i];
-            count++;
         }
-        if (count < len)  des[count] = 0;   //null terminating the destination     (count < len) && des[count] = 0;?????
-
+        if (i != len) des[i] = 0;
     }
 }
