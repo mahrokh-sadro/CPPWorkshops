@@ -201,7 +201,7 @@ namespace sdds {
 		bool ok = false;
 		//If the number of added Items(m_itemsAdded) is less than the length of the m_items array,
 		if (m_itemsAdded < m_noOfItems) {
-			int i;
+			int i;   /// wholy mother, fix this  // Fardad was here
 			for (i = 0; i < m_noOfItems; i++) {		
 					m_items[m_itemsAdded].set(item_name, price, taxed);				
 			}
