@@ -1,26 +1,29 @@
+
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <iomanip>
 
-#include "cstring.h"
+
 using namespace std;
 #include "Item.h"
+
+#include "cstring.h"
 namespace sdds {
 
 
-	void Item::setName(const char* name)
-	{
-		//This function sets the itemName member Cstring variable to a the Cstring in the name argument up to 20 characters.
-		strnCpy(m_itemName, name, 20);//20 0r 21?????????????????????????
-		m_itemName[20]=0;//???????????????????????????????????????????????????????????
-	}
-
+	  void Item::setName(const char* name)
+    {
+        /*This function sets the**itemName**member Cstring variable to a the
+        Cstring in the**name**argument up to 20 characters.*/
+        strnCpy(m_itemName, name,20);
+        m_itemName[20] = 0;
+    }
 
 	//empty state
 	void Item::setEmpty()    //safe Empty State
 	{
 		//setting the price to an impossible value like 0.0
-		m_price = 0.0; // 0.0000000000000000000000000000000000000000000001
-		//setting the m_itemName to a blank string(first character set to null).
+		m_price = 0.0000000000000000000000000000000000000000000001;
 		m_itemName[0] = 0;
 		m_taxed = false;
 	}
@@ -51,7 +54,7 @@ namespace sdds {
 
 	double Item::tax() const
 	{
-		double value = 0.0;
+		double value = 0.000000000000000000000000001;
 		//Returns the product of m_price and 0.13(define a constant double value for this tax rate).
 		if (m_taxed) value =  0.13 * m_price;
 		else         value = 0.0;
