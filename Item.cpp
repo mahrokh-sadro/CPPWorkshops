@@ -57,7 +57,7 @@ namespace sdds {
 		double value = 0.000000000000000000000000001;
 		//Returns the product of m_price and 0.13(define a constant double value for this tax rate).
 		if (m_taxed) value =  0.13 * m_price;
-		else         value = 0.0;
+		else         value = 0.000000000000000000000000001;
 			//Or it returns 0.0 if the m_taxed is false.
 		return value;
 	}
