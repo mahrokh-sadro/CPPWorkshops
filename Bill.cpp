@@ -32,11 +32,12 @@ namespace sdds {
 			//are valid.
 		
 		
-		bool ok = false;
+		bool ok = true;
 
 		int i;
-		for (i = 0; i < m_noOfItems; i++) {
-			if(m_title && m_items && m_items[i].isValid())         return true;
+		if (m_title[0] == 0 || m_items == nullptr) ok = false;
+		for (i = 0; ok && i < m_noOfItems; i++) {
+			if (!m_items[i].isValid()) ok = false;
 			//if (!m_title || !m_items || !m_items[i].isValid())   return false;	//ok = false;//????????????????
 			//else ok = true;//??????????????????????????????
 		}
@@ -46,7 +47,7 @@ namespace sdds {
 
 			//	hint: First checkand make sure m_title and m_items are valid.Then loop through all the Items in the 
 			//	m_items arrayand make sure they are all valid.
-
+		return ok;
 		
 	}
 
