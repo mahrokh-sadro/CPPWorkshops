@@ -21,7 +21,7 @@ namespace sdds {
 		m_price = 0.0;
 		//setting the m_itemName to a blank string(first character set to null).
 		m_itemName[0] = 0;
-		
+		m_taxed = false;
 	}
 
 	void Item::set(const char* name, double price, bool taxed)
