@@ -18,18 +18,19 @@ namespace sdds {
 	void Item::setEmpty()    //safe Empty State
 	{
 		//setting the price to an impossible value like 0.0
-		m_price = 0.0;
+		m_price = 0.0; // 0.0000000000000000000000000000000000000000000001
 		//setting the m_itemName to a blank string(first character set to null).
 		m_itemName[0] = 0;
 		m_taxed = false;
 	}
 
-	void Item::set(const char* name, double price, bool taxed)
-	{
+	void Item::set(const char* name, double price, bool taxed)	{
 
 		//If price is less than 0 or name is null, then the Item is set to a recognizable invalid
 			//empty state(safe empty state).
-		if (!name || price < 0) setEmpty();
+		if (!name || price < 0) {
+			setEmpty();
+		}
 		else {
 			//Sets the m_itemName attribute to the Cstring pointed by the name argument using the setName methodand 
 			setName(name);
@@ -62,7 +63,7 @@ namespace sdds {
 	bool Item::isValid() const
 	{
 		//Returns true if the Item is not set to the empty state(As done in setEmpty function) .
-		return (m_price && m_itemName);                     //the Item??????????????yyy eerroorra with ()?????
+		return m_itemName[0] != 0;                     //the Item??????????????yyy eerroorra with ()?????
 		//	This function can not modify its owner.
 		//return false;
 	}
