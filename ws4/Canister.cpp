@@ -264,7 +264,7 @@ namespace sdds {
 		setContent(C.m_contentName);                       //otherwise we dont?wat we were doing before???ws3
 		if (C.m_contentVolume > ((*this).capacity() - (*this).volume())) {
 			                                                          //the dif between volume() n volumecontent????
-			C.m_contentVolume - ((*this).capacity() - (*this).volume());
+			C.m_contentVolume=C.m_contentVolume - ((*this).capacity() - (*this).volume());
 			(*this).m_contentVolume = (*this).capacity();
 
 		}
