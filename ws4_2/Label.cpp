@@ -101,27 +101,21 @@ namespace sdds {
 		//char m_frame[9];
 
 
-		//readLabel();
-	   // readFrame();          //don need to calllll???? becuz of setFrame?????
+		/*readLabel();
+	    readFrame();*/          //don need to calllll???? becuz of setFrame?????
 
-/*          AbbbbbbbbbbbbbbbbbbbbbbbbbC
-			h                         d
-			h                         d ///////string is here
-			h                         d
-			GfffffffffffffffffffffffffE               */
+		int len = strlen(m_label)+3;//inttttttt??????????????????????????????????
 
-		int len = strlen(m_label);//inttttttt??????????????????????????????????
-
-		cout << m_frame[0] << setw(len + 1) << setfill(m_frame[1]) << m_frame[2] << endl;                                          //A
+		cout << m_frame[0] << setw(len) << setfill(m_frame[1]) << m_frame[2] << endl;                                          //A
 		
 
-		cout << m_frame[7] <<setw( len + 1) << setfill(' ') << m_frame[3] << endl;   //h  d
+		cout << m_frame[7] <<setw( len) << setfill(' ') << m_frame[3] << endl;   //h  d
 
 		cout << m_frame[7] << ' ' << m_label << ' '<< m_frame[3] << endl;   //h  d
 
-		cout << m_frame[7] << setw(len + 1) << setfill(' ') << m_frame[3] << endl;   //h  d
+		cout << m_frame[7] << setw(len) << setfill(' ') << m_frame[3] << endl;   //h  d
 
-		cout << m_frame[6] << setw(len + 1) << setfill(m_frame[5]) << m_frame[4] << endl;                                          //A
+		cout << m_frame[6] << setw(len) << setfill(m_frame[5]) << m_frame[4] << endl;                                          //A
 
 	
 
@@ -130,6 +124,5 @@ namespace sdds {
 		
 
 	}
-
 
 }
