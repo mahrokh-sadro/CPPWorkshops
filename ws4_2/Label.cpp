@@ -77,11 +77,7 @@ namespace sdds {
 		setFrame(inputFrame);
 	}
 
-	/*int Label::lenOflabel()	{
-
-		int len = strlen(m_label);
-		return len;
-	}*/
+	
 	////////////////when we call a function without . notation
 
 
