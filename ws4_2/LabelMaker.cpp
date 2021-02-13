@@ -37,16 +37,22 @@ namespace sdds {
 
 	//Gets the contents of the Labels as demonstrated in the Execution sample
 	void LabelMaker::readLabels()	{
+		cout << "Enter" << m_noOfLabels << "labels:" << endl;
+
 
 		int i(0);
-		for (i = 0; i < m_noOfLabels; i++)  m_labels[i].readLabel();
+		for (i = 0; i < m_noOfLabels; i++) {
 
+			cout << "Enter label number (i+1)" << endl;
+			m_labels[i].readLabel();
+		}
 	}
 	// Prints the Labels as demonstrated in the Execution sample
 	void LabelMaker::printLabels()	{
-
 		int i(0);
-		for (i = 0; i < m_noOfLabels; i++)  m_labels[i].readLabel();
+		for (i = 0; i < m_noOfLabels; i++) {
+			m_labels[i].readLabel();
+		}
 
 	}
 	//Deallocates the memory when LabelMaker goes out of scope.
