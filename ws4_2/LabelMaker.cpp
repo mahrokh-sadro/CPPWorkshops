@@ -1,5 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include <istream>///?????????
+#include <iostream>///?????????
 #include <iomanip>//???????//
 
 
@@ -13,52 +13,55 @@
 using namespace std;
 namespace sdds {
 
-	void LabelMaker::setEmpty()	{
+	void LabelMaker::setEmpty() {
 		m_labels = nullptr;
 	}
-	//creates a dynamic array of Labels to the size of noOfLabels
-	LabelMaker::LabelMaker(int noOfLabels)	{
-		if(noOfLabels>0){ 
 
+
+	//creates a dynamic array of Labels to the size of noOfLabels
+	LabelMaker::LabelMaker(int noOfLabels) {
+		if (noOfLabels > 0) {
+			delete[] m_labels;
+			m_labels = nullptr;
 			m_noOfLabels = noOfLabels;
-			m_labels = new Label[m_noOfLabels];   
-			int i(0);
-			for(i=0; i< m_noOfLabels; i++)   m_labels[i].setToDefault();
+			m_labels = new Label[m_noOfLabels];
+			/*int i(0);
+			for(i=0; i< m_noOfLabels; i++)   m_labels[i].setToDefault();*/
 		}
-		else setEmpty();
+		//else setEmpty();
 	}
 
 
-	//If the number of added Items(m_itemsAdded) is less than the length of the m_items array, this
-	//	function will set the next available subject to the incoming argument values.Then it will add 
-	//	one to the m_itemsAddedand return true;
 
-	//Otherwise, this function will do nothing, returning false;
 
 	//Gets the contents of the Labels as demonstrated in the Execution sample
-	void LabelMaker::readLabels()	{
-		cout << "Enter" << m_noOfLabels << "labels:" << endl;
+	void LabelMaker::readLabels() {
+		cout << "Enter " << m_noOfLabels << " labels:" << endl;
 
 		int i(0);
 		for (i = 0; i < m_noOfLabels; i++) {
 
-			cout << "Enter label number"<< i + 1 << endl;
-			cout << ">";
+			cout << "Enter label number " << i + 1 << " " <<endl;
+			cout << "> ";
 			m_labels[i].readLabel();
 		}
 	}
 	// Prints the Labels as demonstrated in the Execution sample
-	void LabelMaker::printLabels()	{
+	void LabelMaker::printLabels() {
+
 		int i(0);
 		for (i = 0; i < m_noOfLabels; i++) {
-			m_labels[i].readLabel();
+			m_labels[i].printLabel();
 		}
 
 	}
 	//Deallocates the memory when LabelMaker goes out of scope.
-	LabelMaker::~LabelMaker()	{
-		delete[] m_labels;
-			setEmpty();
+	LabelMaker::~LabelMaker() {
+
+
+		delete[] m_labels;  
+		setEmpty();
+
 	}
 
 }
