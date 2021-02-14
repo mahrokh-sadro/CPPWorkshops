@@ -1,3 +1,4 @@
+
 #define _CRT_SECURE_NO_WARNINGS
 #include <istream>///?????????
 #include <iomanip>//???????//
@@ -13,6 +14,11 @@
 using namespace std;
 namespace sdds {
 
+	void Label::setToDefault() {
+		m_label = nullptr;
+		m_frame[0] =0;
+	}
+
 	void Label::setLable(const char* theLable) {
 
 		delete[] m_label;
@@ -22,68 +28,63 @@ namespace sdds {
 		m_label = new char[len + 1];           //whyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy????????????
 		strncpy(m_label, theLable, len);
 		m_label[len] = 0;
+
 	}
 
 	void Label::setFrame(const char* theFrame) {
-
-		strncpy(m_frame, theFrame, 8);
+		//m_frame[0] = 0;
+		strcpy(m_frame, theFrame);
 		m_frame[8] = 0;
-
+	
+		
 	}
-		 
-	//Creates an empty label and defaults the frame to "+-+|+-+|"
-	Label::Label()	{		                            //m_label = nullptr;??????????????????????????????????????????????????????????
 
-		
-		m_label = new char[71];/////////////////////////////////////////////////////////////////////////////////////////
-		strcpy(m_label, "");
-		
-		                                               //when i set m_label to nullptr it stopssssssssssss!!!!!!!!!!!!!!!!!!!
-		
+
+	//Creates an empty label and defaults the frame to "+-+|+-+|"
+	Label::Label() {
+		setToDefault();
 		setFrame("+-+|+-+|");
 
 	}
+	//Creates an empty label and sets the frame to the frameArg argument.
 
-	Label::Label(const char* frameArg)	{
-
+	Label::Label(const char* frameArg) {
+		setToDefault();
 		setFrame(frameArg);
-		
-		m_label = new char[71];////////////////////////////////////////////////////////////////////////////////////////
-		strcpy(m_label, "");
 	}
 
-	Label::Label(const char* frameArg, const char* content)	{
+	Label::Label(const char* frameArg, const char* content) {
+		setToDefault();
+		setFrame(frameArg);
+		setLable(content);
 
-		//if (frameArg && content) {
-			setFrame(frameArg);
-
-			setLable(content);
-
-		//}
 	}
 
-	Label::~Label()	{
-		
+
+	//Makes sure there is no memory leak when the label goes out of scope.
+	Label::~Label() {
 		delete[] m_label;
+		
+		m_label = nullptr;
+	
 	}
 
-	void Label::readLabel()	{
+	/*Reads the label from console up to 70 characters and stores it in the
+		Label as shown in the Execution sample*/
+	void Label::readLabel() {//
 
 		char inputLabel[71];
 		cin.getline(inputLabel, 71);
-		strcpy(m_label, inputLabel);
+		setLable(inputLabel);
+
 	}
+	
+
+	
 
 
 	std::ostream& Label::printLabel() const {//how to get the length?????
-
-
-
-		/*readLabel();
-		readFrame();*/          //I havnt called these,how come they impact m_label n m_frame????????
-
-		
-		//if (/*m_label!=nullptr && */m_frame) { //////////////why this doesnt work????????????????
+		if (m_label && m_frame) { //////////////why this doesnt work????????????????
 
 			int len = (size_t)strlen(m_label) + 3;//inttttttt??????????????????????????????????
 
@@ -101,33 +102,24 @@ namespace sdds {
 
 
 			return cout;
-		/*}*/
-		
+		}
 
 
 	}
 
-
 }
 
+	
 
 
 
 
 
-	//void Label::readFrame() {		// ref of obj ? ? ? ? ?
-	//
-	//	char inputFrame[9];
-	//	cin.getline(inputFrame,9);
-	//	setFrame(inputFrame);
-	//}
 
-	//
-	////////////////when we call a function without . notation
 
- ///why setting to null doesnt work????
-///why not calling set naem n set frame in display
-/// why we don nee read label?????
+
+
+
 
 
 
@@ -148,11 +140,6 @@ namespace sdds {
 // using namespace std;
 // namespace sdds {
 
-// 	void Label::setToDefault() {
-// 		m_label = nullptr;
-// 		m_frame[0] =0;
-// 	}
-
 // 	void Label::setLable(const char* theLable) {
 
 // 		delete[] m_label;
@@ -162,63 +149,68 @@ namespace sdds {
 // 		m_label = new char[len + 1];           //whyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy????????????
 // 		strncpy(m_label, theLable, len);
 // 		m_label[len] = 0;
-
 // 	}
 
 // 	void Label::setFrame(const char* theFrame) {
-// 		//m_frame[0] = 0;
-// 		strcpy(m_frame, theFrame);
+
+// 		strncpy(m_frame, theFrame, 8);
 // 		m_frame[8] = 0;
-	
-		
+
 // 	}
-
-
+		 
 // 	//Creates an empty label and defaults the frame to "+-+|+-+|"
-// 	Label::Label() {
-// 		setToDefault();
+// 	Label::Label()	{		                            //m_label = nullptr;??????????????????????????????????????????????????????????
+
+		
+// 		m_label = new char[71];/////////////////////////////////////////////////////////////////////////////////////////
+// 		strcpy(m_label, "");
+		
+// 		                                               //when i set m_label to nullptr it stopssssssssssss!!!!!!!!!!!!!!!!!!!
+		
 // 		setFrame("+-+|+-+|");
 
 // 	}
-// 	//Creates an empty label and sets the frame to the frameArg argument.
 
-// 	Label::Label(const char* frameArg) {
-// 		setToDefault();
+// 	Label::Label(const char* frameArg)	{
+
 // 		setFrame(frameArg);
-// 	}
-
-// 	Label::Label(const char* frameArg, const char* content) {
-// 		setToDefault();
-// 		setFrame(frameArg);
-// 		setLable(content);
-
-// 	}
-
-
-// 	//Makes sure there is no memory leak when the label goes out of scope.
-// 	Label::~Label() {
-// 		delete[] m_label;
 		
-// 		m_label = nullptr;
-	
+// 		m_label = new char[71];////////////////////////////////////////////////////////////////////////////////////////
+// 		strcpy(m_label, "");
 // 	}
 
-// 	/*Reads the label from console up to 70 characters and stores it in the
-// 		Label as shown in the Execution sample*/
-// 	void Label::readLabel() {//
+// 	Label::Label(const char* frameArg, const char* content)	{
+
+// 		//if (frameArg && content) {
+// 			setFrame(frameArg);
+
+// 			setLable(content);
+
+// 		//}
+// 	}
+
+// 	Label::~Label()	{
+		
+// 		delete[] m_label;
+// 	}
+
+// 	void Label::readLabel()	{
 
 // 		char inputLabel[71];
 // 		cin.getline(inputLabel, 71);
-// 		setLable(inputLabel);
-
+// 		strcpy(m_label, inputLabel);
 // 	}
-	
-
-	
 
 
 // 	std::ostream& Label::printLabel() const {//how to get the length?????
-// 		if (m_label && m_frame) { //////////////why this doesnt work????????????????
+
+
+
+// 		/*readLabel();
+// 		readFrame();*/          //I havnt called these,how come they impact m_label n m_frame????????
+
+		
+// 		//if (/*m_label!=nullptr && */m_frame) { //////////////why this doesnt work????????????????
 
 // 			int len = (size_t)strlen(m_label) + 3;//inttttttt??????????????????????????????????
 
@@ -236,13 +228,36 @@ namespace sdds {
 
 
 // 			return cout;
-// 		}
+// 		/*}*/
+		
 
 
 // 	}
 
+
 // }
 
-	
+
+
+
+
+
+// 	//void Label::readFrame() {		// ref of obj ? ? ? ? ?
+// 	//
+// 	//	char inputFrame[9];
+// 	//	cin.getline(inputFrame,9);
+// 	//	setFrame(inputFrame);
+// 	//}
+
+// 	//
+// 	////////////////when we call a function without . notation
+
+//  ///why setting to null doesnt work????
+// ///why not calling set naem n set frame in display
+// /// why we don nee read label?????
+
+
+
+
 
 
