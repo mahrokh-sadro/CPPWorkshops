@@ -22,9 +22,10 @@ namespace sdds {
 		Label(const char* frameArg, const char* content);
 		~Label();
 		void readLabel();		
-		void readFrame();        //mine
+		//void readFrame();        //mine
 		//int lenOflabel();
 		std::ostream& printLabel()const;
+		
 	};
 }
 

@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="LabelMaker.cpp" />
+    <ClCompile Include="Source.cpp" />
     <ClCompile Include="w4_tester.cpp" />
   </ItemGroup>
   <ItemGroup>
