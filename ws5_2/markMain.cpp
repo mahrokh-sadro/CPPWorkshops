@@ -7,6 +7,8 @@
 /////////////////////////////////////////////
 
 #include <iostream>
+#define SDDS_DEBUG
+
 #include "Mark.h"
 using namespace std;
 using namespace sdds;
@@ -27,11 +29,16 @@ int main() {
    cout << int(n = 120) << endl;
    cout << int(k = 70) << endl;
    cout << "double ........." << endl;
+#ifdef  SDDS_DEBUG
+
+   cout << "hereeeeeeeeeeeeeeeeeeeeeeeeeeee" << endl;
+#endif
    m = 50; n = 80; k = 120;
    cout << double(m) << endl;
    cout << double(n) << endl;
    cout << double(k) << endl;
    cout << "char ..........." << endl;
+
    cout << char(m) << endl;
    cout << char(n) << endl;
    cout << char(k) << endl;
