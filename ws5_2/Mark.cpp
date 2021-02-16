@@ -12,18 +12,13 @@ namespace sdds {
 	}
 
 	Mark::Mark() {
-#ifdef  SDDS_DEBUG
+		//m_value = 0;
 
-		cout << "def cons" << endl;
-#endif
 		setEmpty();
 	}
 
 	Mark::Mark(int value) {
-#ifdef  SDDS_DEBUG
 
-		cout << "setEmpty()" << endl;
-#endif
 		if (value >= 0 && value <= 100) {
 			setEmpty();
 			m_value = value;
@@ -44,7 +39,7 @@ namespace sdds {
 
 		cout << "operator int()" << endl;
 #endif
-		return (bool)*this ? m_value : 0;
+		return (bool)*this ? this->m_value : 0;
 	}
 
 	Mark& Mark::operator+=(int value)	{
