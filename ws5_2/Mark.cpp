@@ -2,15 +2,12 @@
 #include <iostream>
 #include <cstring>
 #include "Mark.h"
-#define SDDS_DEBUG
+//#define SDDS_DEBUG
 using namespace std;
 namespace sdds {
 	//   0< =m_value=<100
 	void Mark::setEmpty() {
-#ifdef  SDDS_DEBUG
 
-		cout << "setEmpty()" << endl;
-#endif
 		m_value = 0;
 	}
 
@@ -25,7 +22,7 @@ namespace sdds {
 	Mark::Mark(int value) {
 #ifdef  SDDS_DEBUG
 
-		cout << "1 arg cons" << endl;
+		cout << "setEmpty()" << endl;
 #endif
 		if (value >= 0 && value <= 100) {
 			setEmpty();
@@ -61,13 +58,14 @@ namespace sdds {
 		return *this;
 	}
 
-	Mark& Mark::operator=(int value)	{
+	Mark& Mark::operator=(int value)	{//doesnt it set to ????
 #ifdef  SDDS_DEBUG
 
 		cout << "operator=" << endl;
 #endif
-		this->m_value = value >= 0 && value <= 100 ?  value : 0;//////////////////ATTENSION!!!!!!!!!!!!!!!!!!!!!!!!
-		
+		//this->m_value = value >= 0 && value <= 100 ?  value :0;
+		this->m_value = value;
+
 		return *this;
 	}
 
@@ -112,22 +110,9 @@ namespace sdds {
 	}
 
 	
+    int operator+=(int& leftOper, const Mark& rightOper){
 
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		return leftOper += (int)rightOper;
+	}
 
 }
