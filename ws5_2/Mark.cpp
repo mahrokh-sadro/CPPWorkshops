@@ -7,28 +7,23 @@ using namespace std;
 namespace sdds {
 	//   0< =m_value=<100
 	void Mark::setEmpty() {
-
 		m_value = 0;
 	}
 
 	Mark::Mark() {
-		//m_value = 0;
-
+		//m_value = 0
 		setEmpty();
 	}
 
 	Mark::Mark(int value) {
-
-		if (value >= 0 && value <= 100) {
-			setEmpty();
+      setEmpty();
+		if (value >= 0 && value <= 100) {	
 			m_value = value;
 		}
 	}
-
 	//check if its in range
 	Mark::operator bool() const	{//  (bool)obj
 #ifdef  SDDS_DEBUG
-
 		cout << "operator bool()" << endl;
 #endif
 		return m_value >= 0 && m_value <= 100;
@@ -36,7 +31,6 @@ namespace sdds {
 
 	Mark::operator int() const	{
 #ifdef  SDDS_DEBUG
-
 		cout << "operator int()" << endl;
 #endif
 		return (bool)*this ? this->m_value : 0;
