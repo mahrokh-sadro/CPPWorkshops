@@ -1,6 +1,13 @@
+//Name: Mahrokh Sadrolodabaee
+//Seneca email: msadrolodabaee@myseneca.ca
+//Seneca Student ID: 159436195
+//Date: 02.21.2021
+//I have done all the coding by myselfand only copied the code that my professor
+//provided to complete my workshopsand assignments.
+////////////////////////////////////////////////
+
 #define _CRT_SECURE_NO_WARNINGS
-#include <iostream>
-#include <cstring>
+
 #include "Mark.h"
 //#define SDDS_DEBUG
 using namespace std;
@@ -17,9 +24,10 @@ namespace sdds {
 
 	Mark::Mark(int value) {
       setEmpty();
-		if (value >= 0 && value <= 100) {	
-			m_value = value;
-		}
+	  if (value >= 0 && value <= 100) {
+		  m_value = value;
+	  }
+	  else m_value = -1;
 	}
 	//check if its in range
 	Mark::operator bool() const	{//  (bool)obj
