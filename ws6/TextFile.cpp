@@ -38,7 +38,7 @@ namespace sdds {
    
 
    void TextFile::setFilename(const char* fname, bool isCopy){
-       setEmpty(); //???
+      // setEmpty(); //???
       if (isCopy == true) {
            m_filename = new char[strlen(fname) + 3];//C_
            strcpy(m_filename, "C_");
