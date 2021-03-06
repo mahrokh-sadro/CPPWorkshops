@@ -28,7 +28,7 @@ namespace sdds {
 
 
    void TextFile::setEmpty()  {
-       delete[] m_textLines; //why??we hadnt done this before
+       delete[] m_textLines; 
        m_textLines = nullptr;
        delete[] m_filename;
        m_filename = nullptr;
@@ -49,22 +49,12 @@ namespace sdds {
           strcpy(m_filename, fname);
        }
    }
-  /* Creates a local ifstream object to open the file 
-       the name held in m_filename.Then it will read
-       the file, character by character, and 
-       accumulates the number of newlines in the 
-       m_noOfLines attribute.
-      In the end, it will increase m_noOfLines
-       by one, just in case, the last line does
-       not have a new line at the end.
-       If the number of lines is zero, it will delete
-       the m_filename and set it to nullptr. 
-       (Setting the TextFile to a safe empty state)*/
+
    void TextFile::setNoOfLines()  {
        char c;
        ifstream readFromFile(m_filename);
-       /*string temp;
-       while (getline(readFromFile, temp)) ++m_noOfLines;*/
+                                                                           /*string temp;
+                                                                       while (getline(readFromFile, temp)) ++m_noOfLines;*/
        if (readFromFile.is_open()) {
            while (readFromFile) {
                readFromFile >> c;
@@ -77,20 +67,7 @@ namespace sdds {
            delete[] m_filename;
            m_filename = nullptr;
        }
-   }//to read data from console or filelwe hvavr to use
-   //getline????
-
-  /* Loads the text file m_filename into the dynamic
-       array of Lines pointed by m_textLines :
-   If the m_filename is null, this function does 
-       noe m_filename is not null
-      (TextFile is not in a safe empty state), 
-       loadText() will dynamically allocate an 
-       array of Lines pointed by m_textLines with 
-       the size kept in m_noOfLines.thing.
-      If th*/
-  /*Make sure m_textLine is deleted before this to 
-      prevent memory leak.*/
+ 
 
 
   void TextFile::loadText() {
@@ -103,14 +80,9 @@ namespace sdds {
           string temp;
           ifstream f(m_filename);
           getline(f, temp);
-         /* In a loop reads each line into the string 
-              object and then sets the m_textLines
-              array elements to the values returned 
-              by the c_str() method of the string 
-              object until the reading fails(end of
-                  file reached).*/
-          while(!f.eof()){// how to do for (i = 0; f != NULL; i++)//f???
-              f >> temp;//??????????????????????
+         
+          while(!f.eof()){                                                // how to do for (i = 0; f != NULL; i++)//f???
+              f >> temp;
               m_textLines[i] = temp.c_str();
               i++;
           }
@@ -122,21 +94,7 @@ namespace sdds {
 
 
    }
-  /*Saves the content of the TextFile under a new name.
-     Use a local ofstream object to open a new file
-      using the name kept in the argument filename.Then
-      loop through the elements of the m_textLines 
-      arrayand write them in the opened file adding
-      a new line to the end of each line.*/
-   /*void TextFile::saveAs(const char* fileName) const   {
-       ofstream myDisplay(fileName);
-       int i(0);
-       while (myDisplay) {
-           myDisplay<< m_textLines[i]<<endl;
-           i++;
-       }
-       
-   }*////????????????????????
+
    void TextFile::saveAs(const char* fileName) const {
        ofstream myDisplay(fileName);
        int i(0);
@@ -147,23 +105,17 @@ namespace sdds {
 
    }
 
-   /*Creates an empty TextFile and initializes the
-       m_pageSize attribute using the pageSize
-       argument.*/
+ 
    TextFile::TextFile(unsigned pageSize)/*:m_pageSize(pageSize)*/{
-       //Creates an empty TextFile ???????????????????
         setEmpty();
         m_pageSize=pageSize;
-       //which one happens first??
    }
-   //?????nitialize????
    TextFile::TextFile(const char* filename, unsigned pageSize) /*:m_pageSize(pageSize)*/{
        setEmpty();
        m_pageSize=pageSize;
        if (filename) {
            setFilename(filename,true);
            setNoOfLines();
-           // load the Text
            loadText();
        }
    
@@ -172,23 +124,15 @@ namespace sdds {
    //copy constructor
 
 
-  /* Sets the file - name to the name of the incoming 
-       TextFile object(isCopy set to true) See 
-       setFilename()
-       Saves the content of the incoming TextFile
-       under the file name of the current TextFile
-       set the number of lines
-       loads the Text*/
-
-   //copy construction?????????????
+ 
    TextFile::TextFile(const TextFile& copyFrom)   {
-       //*this = copyFrom;
+       //*this = copyFrom;????
        setEmpty();
        m_pageSize = copyFrom.m_pageSize;
        setFilename(copyFrom.m_filename,true);
        saveAs(copyFrom.m_filename);
        setNoOfLines();
-      loadText();////////////////////////////////////
+      loadText();
    }
    //copy assignment
    TextFile& TextFile::operator=(const TextFile& str)   {
@@ -201,7 +145,7 @@ namespace sdds {
            loadText();
        }
      
-       return *this;//////?????????????//////////
+       return *this;
    }
 
    TextFile::~TextFile()  {
@@ -215,20 +159,7 @@ namespace sdds {
    }
 
 
-   /*Prints the filename and then the content of the file "m_pageSize"
-       lines at a time.
-
-       print the file name
-       underline the file name with '=' character
-       loops through the lines and print them one by line
-       pauses after printing "m_pageSize" lines and prompts the user
-       Hit ENTER to continue... and waits for the user to press
-       enterand repeats until all lines are printed.
-
-       The function performs no action if the TextFile is in an empty state.
-
-       This function receives and returns an instance of istreamand
-       uses the instance for printouts.*/
+   
 
    std::ostream& TextFile::view(std::ostream& ostr) const  {//cout//dispplay
        int i(0);
@@ -256,9 +187,7 @@ namespace sdds {
 
   
  
-  /* Receives a filename from istr to set the file name of the
-       TextFile.Then sets the number of line sand loads the
-       Text.When done it will return the istr;*/
+
    std::istream& TextFile::getFile(std::istream& istr)  {//cin
        string temp;
        //istr >> temp;
@@ -270,16 +199,8 @@ namespace sdds {
   
    }
 
-  /* Returns the element in the m_textLine array corresponding
-       to the index argument.If the TextFile is in an empty 
-       state, it will return null.If the index exceeds the 
-       size of the array it should loop back to the beginning.
-     For example, if the number of lines is 10, the last 
-       index should be 9 and index 10 should return the
-       first element and index 11 should return the 
-       second element.*/
+
    const char* TextFile::operator[](unsigned index) const  {
-     // if(TextFile != nullptr)???????????????????/
        if (*this) {
            return  m_textLines[index % m_noOfLines];
        }
@@ -288,7 +209,7 @@ namespace sdds {
 
    TextFile::operator bool() const   {//all attributes??
       // return !!*this;??
-       return m_textLines && m_filename && m_noOfLines && m_pageSize;
+       return m_textLines && m_filename && m_noOfLines && m_pageSize;//!isEmpty?
    }
 
     const char* TextFile::name() const  {
