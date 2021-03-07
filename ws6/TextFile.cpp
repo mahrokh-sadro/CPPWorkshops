@@ -17,8 +17,8 @@ namespace sdds {
    }
    Line& Line::operator=(const char* lineValue) {
       delete[] m_value;
-      m_value = new char[strlen(lineValue) + 1];///////////////////
-      strcpy(m_value, lineValue);////////////////////////////////////////////////
+      m_value = new char[strlen(lineValue) + 1];
+      strcpy(m_value, lineValue);
       return *this;
    }
    Line::~Line() {
@@ -38,27 +38,34 @@ namespace sdds {
    
 
    void TextFile::setFilename(const char* fname, bool isCopy){
-      // setEmpty(); //???
-      if (isCopy == true) {
-           m_filename = new char[strlen(fname) + 3];//C_
-           strcpy(m_filename, "C_");
-           strcat(m_filename, fname);
-      }
-       else {
-          m_filename = new char[strlen(fname) + 1];
-          strcpy(m_filename, fname);
-       }
-   }
+       //setEmpty(); //???
+       delete[] m_filename;
+       m_filename = nullptr;
+       if (fname) {
+           if (!isCopy) {
+               m_filename = new char[strlen(fname) + 1];
+               strcpy(m_filename, fname);
+           }
 
+           else {
+               m_filename = new char[strlen(fname) + 3];//C_
+               strcpy(m_filename, "C_");
+               strcat(m_filename, fname);
+             /*  m_filename = new char[fname.length() + 1];
+               strcpy(m_filename, fname.c_str());*/
+           }
+       }
+       
+   }
+  
    void TextFile::setNoOfLines()  {
-       char c;
-       ifstream readFromFile(m_filename);
-                                                                           /*string temp;
-                                                                       while (getline(readFromFile, temp)) ++m_noOfLines;*/
-       if (readFromFile.is_open()) {
-           while (readFromFile) {
-               readFromFile >> c;
-               if(c=='\n')   ++m_noOfLines;
+
+       ifstream f(m_filename);
+       m_noOfLines = 0;
+       string line;
+       if (f.is_open()) {
+           while (getline(f,line)) {
+                 ++m_noOfLines;
 
            }
            ++m_noOfLines;
@@ -67,6 +74,9 @@ namespace sdds {
            delete[] m_filename;
            m_filename = nullptr;
        }
+   }//to read data from console or filelwe hvavr to use
+   //getline????
+
  
 
 
@@ -79,11 +89,10 @@ namespace sdds {
           m_textLines=new Line[m_noOfLines];
           string temp;
           ifstream f(m_filename);
-          getline(f, temp);
-         
-          while(!f.eof()){                                                // how to do for (i = 0; f != NULL; i++)//f???
-              f >> temp;
-              m_textLines[i] = temp.c_str();
+       
+          while(/*!f.eof() && */getline(f, temp)){
+                                                        //f >> temp;//?????????????????????? wats the difference between this n getline
+              m_textLines[i] = temp.c_str();            //how can i write a tester for each f? 
               i++;
           }
           m_noOfLines = i;
@@ -94,25 +103,26 @@ namespace sdds {
 
 
    }
-
+  
    void TextFile::saveAs(const char* fileName) const {
-       ofstream myDisplay(fileName);
+       ofstream f(fileName);//open a new file
        int i(0);
-       if (myDisplay.is_open()) {
+       if (f.is_open()) {
            for(i=0;i< m_noOfLines;i++)
-           myDisplay << m_textLines[i] << endl;
+           f << m_textLines[i] << endl;
        }
 
    }
-
- 
-   TextFile::TextFile(unsigned pageSize)/*:m_pageSize(pageSize)*/{
-        setEmpty();
-        m_pageSize=pageSize;
+ /*  Creates an empty TextFileand initializes the m_pageSize 
+       attribute using the pageSize argument.
+   */
+   TextFile::TextFile(unsigned pageSize):m_pageSize(pageSize), m_textLines(nullptr), m_filename(nullptr), m_noOfLines(0) {///?
+       //Creates an empty TextFile ??????????????????
+      //use ostream obj????????????????????????????????????????????????????????????????????????????????????/
    }
-   TextFile::TextFile(const char* filename, unsigned pageSize) /*:m_pageSize(pageSize)*/{
-       setEmpty();
-       m_pageSize=pageSize;
+  
+   TextFile::TextFile(const char* filename, unsigned pageSize) :m_pageSize(pageSize), m_textLines(nullptr), m_filename(nullptr), m_noOfLines(0){
+      
        if (filename) {
            setFilename(filename,true);
            setNoOfLines();
@@ -121,25 +131,29 @@ namespace sdds {
    
    
    }
+
+
+  
    //copy constructor
-
-
- 
-   TextFile::TextFile(const TextFile& copyFrom)   {
-       //*this = copyFrom;????
-       setEmpty();
-       m_pageSize = copyFrom.m_pageSize;
-       setFilename(copyFrom.m_filename,true);
-       saveAs(copyFrom.m_filename);
-       setNoOfLines();
-      loadText();
+   TextFile::TextFile(const TextFile& copyFrom): m_pageSize(copyFrom.m_pageSize), m_textLines(nullptr), m_filename(nullptr), m_noOfLines(0) {
+                                                                                                       //*this = copyFrom;
+                                                                                                      // setEmpty();
+        // If the incoming Text object is in a valid State???????? ??????????????      
+       if (copyFrom) {
+           setFilename(copyFrom.m_filename, true);
+           saveAs(copyFrom.m_filename);
+           setNoOfLines();
+           loadText();
+      }
+       
    }
    //copy assignment
    TextFile& TextFile::operator=(const TextFile& str)   {
        if (this != &str && str && *this) {
-           delete[] m_textLines;
-           m_textLines = nullptr;
-           //*this = str;
+                                                                                              /* delete[] m_textLines;
+                                                                                               m_textLines = nullptr;*/
+                                                                                               //*this = str;
+           setEmpty();
            saveAs(str.m_filename);
            setNoOfLines();
            loadText();
@@ -154,20 +168,22 @@ namespace sdds {
        delete[] m_textLines;
        m_textLines = nullptr;
    }
+
    unsigned TextFile::lines() const {
        return m_noOfLines;
    }
 
 
-   
+  
 
    std::ostream& TextFile::view(std::ostream& ostr) const  {//cout//dispplay
        int i(0);
        if (*this) {
-           ostr << m_filename;    //if(*this)
+           ostr << m_filename;   
 
-           for (i = 0; i < strlen(m_filename); i++) ostr << '=';
-           for (i = 0; i < m_pageSize; i++) ostr << m_textLines[i];
+           ostr.width(strlen(m_filename))<< ostr.fill('=');
+
+           for (i = 0; i < m_pageSize; i++)    ostr << m_textLines[i];
 
            ostr << "Hit ENTER to continue...";
            char input;
@@ -187,11 +203,10 @@ namespace sdds {
 
   
  
-
+ 
    std::istream& TextFile::getFile(std::istream& istr)  {//cin
        string temp;
-       //istr >> temp;
-       getline(istr, temp);
+       istr >> temp;   //reads till space??????????????????????????????????????????????????????????????????????????????????????//
       setFilename(temp.c_str(),true);
       setNoOfLines();
       loadText();
@@ -199,17 +214,17 @@ namespace sdds {
   
    }
 
-
+  
    const char* TextFile::operator[](unsigned index) const  {
+     
        if (*this) {
            return  m_textLines[index % m_noOfLines];
        }
-       else return NULL;
    }
 
    TextFile::operator bool() const   {//all attributes??
-      // return !!*this;??
-       return m_textLines && m_filename && m_noOfLines && m_pageSize;//!isEmpty?
+      // return !!*this;?? or !!setEmpty()????????????????????????????????????????????????????????????????????????////
+       return m_textLines && m_filename && m_noOfLines!=0 && m_pageSize !=0;
    }
 
     const char* TextFile::name() const  {
