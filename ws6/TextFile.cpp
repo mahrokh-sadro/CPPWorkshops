@@ -201,6 +201,7 @@ namespace sdds {
                 if (                     m_pageSize )
                 {
                     ostr << "Hit ENTER to continue...";
+                    cin.ignore();
 
 
                 }
