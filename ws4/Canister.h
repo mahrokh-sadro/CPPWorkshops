@@ -1,3 +1,12 @@
+//Name: Mahrokh Sadrolodabaee
+//Seneca email: msadrolodabaee@myseneca.ca
+//Seneca Student ID: 159436195
+//Date: 02.11.2021
+//I have done all the coding by myselfand only copied the code that my professor
+//provided to complete my workshopsand assignments.
+////////////////////////////////////////////////
+
+
 #ifndef SDDS_BOX_H
 #define SDDS_BOX_H
 #include <iostream>
@@ -20,7 +29,7 @@ namespace sdds {
       ~Canister();
       Canister& setContent(const char* contentName);
       Canister& pour(double quantity);
-      Canister& pour(Canister& C);//i added C
+      Canister& pour(Canister& C);
       double volume()const;
       std::ostream& display()const;
       double capacity()const;
