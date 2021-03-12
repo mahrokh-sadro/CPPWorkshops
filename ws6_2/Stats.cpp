@@ -142,8 +142,8 @@ namespace sdds {
 			ifstream f(m_filename);
 
 			while (f>> temp) {//extraction operator
-
-				m_textNumbers[i] = temp;/////////////////////////////////??????????????????????????????????????????????????????????
+				//getignore?????????????????????????????????????????????
+				m_textNumbers[i].m_value = temp;//???????????????????????????????????????????????????????????????????????????????????????
 				i++;
 			}
 			m_noOfNumbers = i;
@@ -181,7 +181,7 @@ namespace sdds {
 		if (*this) {
 			ret = m_textNumbers[idx % m_noOfNumbers].m_value;
 		}
-		return ret;////////////////////////////////////////???????????????????????????????????????????????????????????????????
+		return ret;//????????????????????????????????????????????????????????????????????????????????????????????????????
 
 
 	}
@@ -214,21 +214,32 @@ namespace sdds {
 		return (m_filename != nullptr);
 	}
 
-	//Sorts the numbers in ascending or descending order.
+	
+
+
 
 	void Stats::sort(bool ascending)	{
+		int i, j;
+		Line temp;
+		for (i = m_noOfNumbers - 1; i > 0; i--) {
+			for (j = 0; j < i; j++) {
+				if (m_textNumbers[j].m_value > m_textNumbers[j + 1].m_value) {
+					temp = m_textNumbers[j];
+					m_textNumbers[j].m_value = m_textNumbers[j+1].m_value;
+					m_textNumbers[j + 1].m_value=temp;
+				}
+			}
 
-
-
+		}
 	}
 
 
-	//returns the number of numbers in the Stats object.
+	
 	unsigned Stats::size() const{
 		return m_noOfNumbers;
 	}
 
-	//returns the name of the file tied to the Stats object.
+	
 	const char* Stats::name() const{
 
 		return (const char*) m_filename;
@@ -241,18 +252,71 @@ namespace sdds {
 		The format of the printout should be
 		the same as printing all the numbers.*/
 	unsigned Stats::occurrence(double min, double max, std::ostream& ostr)	{
-		return 0;
+		//each obj m_textNumbers[i].m_value
+
+		unsigned i(0);
+		unsigned count(0);
+		for (i = 0; m_textNumbers[i]; i++) {
+			if (m_textNumbers[i].m_value >= min && m_textNumbers[i].m_value <= max)  ++count;				
+		}
+		return count;
+	}
+	std::ostream& Stats::view(std::ostream& ostr) const {
+		if (*this) {
+			ostr << m_filename << endl;
+			for (int i = 0; m_filename[i]; i++) ostr << "=";
+			ostr << endl;
+			for (unsigned i = 0; i < m_noOfNumbers; i++) {
+				ostr << m_textNumbers;
+			}
+
+		}
+		return ostr;
+
 	}
 
+	
 
+
+
+	/*Stats should be printable by ostream(cout) using the operator<<.
+
+		A Stats object should be able to display the numbers in a 
+		tabular format on ostream in a specified number of columns,
+		column width and precision.See the execution sample file.*/
 
 	std::ostream& operator<<(std::ostream& os, const Stats& obj){
-		// TODO: insert return statement here
+
+		return obj.view(os);
+	}
+	void Stats::setFilename(const char* fname) {
+		delete[] m_filename;
+		m_filename = nullptr;
+		if (fname) {
+			m_filename = new char[strlen(fname) + 1];
+			strcpy(m_filename, fname);
+
+		}
+
 	}
 
+	std::istream& Stats::getFile(std::istream& istr){
+		string temp;
+		getline(istr, temp);
+		setFilename(temp.c_str());
+		setNoOfNumbers();
+		loadText();
+		return istr;
 
+	}
+	/*istream extraction operator>>
 
-	std::istream& operator>>(std::istream& is, const Stats& obj)	{
-		// TODO: insert return statement here
+		Stats object should be able to receive the data file
+		name from ostream(cin) using operator>>.After receiving
+		the name, if the data file is open successfully, the 
+		numbers should be loaded into the Stats object.*/
+
+	std::istream& operator>>(std::istream& is,  Stats& obj)	{
+		return obj.getFile(is);
 	}
 }

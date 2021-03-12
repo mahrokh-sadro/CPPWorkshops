@@ -4,9 +4,9 @@
 namespace sdds {
 
     class Line {
-        double m_value; // 1 number
+        double m_value=0; // 1 number
         operator double ()const; //
-      //  Line() {};
+        Line() {};
       //  Line& operator=(double);
       //  ~Line();
         // copy and copy assignment prevention goes here
@@ -27,6 +27,7 @@ namespace sdds {
        unsigned m_precision;;
        //unsigned m_noOfLines;
        void setNoOfNumbers();
+       void setFilename(const char* fname);
        void loadText();
        void saveAs(const char* fileName) const;
        void setEmpty();
@@ -44,7 +45,8 @@ namespace sdds {
 
        //Copy assignment
        Stats& operator=(const Stats& obj);
-
+       std::ostream& view(std::ostream& os)const;
+       std::istream& getFile(std::istream& is);
        double& operator[](unsigned idx);
        double operator[](unsigned idx)const;
        operator bool()const;
@@ -55,7 +57,7 @@ namespace sdds {
 
   };
    std::ostream& operator<<(std::ostream& os, const Stats& obj);
-   std::istream& operator>>(std::istream& is, const Stats& obj);
+   std::istream& operator>>(std::istream& is,  Stats& obj);
 
 
 }
