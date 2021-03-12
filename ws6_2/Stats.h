@@ -4,14 +4,14 @@
 namespace sdds {
 
     class Line {
-        double m_value;
-        operator double ()const;
-        Line() {};
-        Line& operator=(double);
-        ~Line();
+        double m_value; // 1 number
+        operator double ()const; //
+      //  Line() {};
+      //  Line& operator=(double);
+      //  ~Line();
         // copy and copy assignment prevention goes here
-        Line(const Line& copyfrom);
-        Line& operator=(const Line&);
+      //  Line(const Line& copyfrom);
+      //  Line& operator=(const Line&);
         friend class Stats;
 
     };
@@ -19,17 +19,17 @@ namespace sdds {
 
 
    class Stats {
-       char* m_filename;
-       Line* m_textLines;
+       char* m_filename;// name of file
+       Line* m_textNumbers; //array of all numbers
        unsigned m_noOfNumbers;
        unsigned m_columnWidth;
        unsigned m_noOfColumns;
        unsigned m_precision;;
-       unsigned m_noOfLines;
-       void setNoOfLines();
+       //unsigned m_noOfLines;
+       void setNoOfNumbers();
        void loadText();
        void saveAs(const char* fileName) const;
-
+       void setEmpty();
    public:
        Stats(unsigned columnWidth = 15,
            unsigned noOfColumns = 4,
@@ -43,7 +43,7 @@ namespace sdds {
        Stats(const Stats& obj);
 
        //Copy assignment
-       Stats& operator=(const Stats& copyFrom);
+       Stats& operator=(const Stats& obj);
 
        double& operator[](unsigned idx);
        double operator[](unsigned idx)const;
