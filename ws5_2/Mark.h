@@ -1,7 +1,14 @@
+//Name: Mahrokh Sadrolodabaee
+//Seneca email: msadrolodabaee@myseneca.ca
+//Seneca Student ID: 159436195
+//Date: 02.21.2021
+//I have done all the coding by myselfand only copied the code that my professor
+//provided to complete my workshopsand assignments.
+////////////////////////////////////////////////
 
 #ifndef SDDS_MARK_H_
 #define SDDS_MARK_H_
-#include <iostream>//???
+
 
 namespace sdds {
 	class Mark {
@@ -17,8 +24,10 @@ namespace sdds {
 		Mark& operator=(int value);
 		operator double()const;
 		operator char()const;
+
 	};
 
+                int operator+=(int& leftOper, const Mark& rightOper);
 
 
 }
