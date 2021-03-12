@@ -1,6 +1,14 @@
+//Name: Mahrokh Sadrolodabaee
+//Seneca email: msadrolodabaee@myseneca.ca
+//Seneca Student ID: 159436195
+//Date: 02.18.2021
+//I have done all the coding by myselfand only copied the code that my professor
+//provided to complete my workshopsand assignments.
+////////////////////////////////////////////////
+
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
-#include <cstring>
+
 #include "Account.h"
 
 using namespace std;
@@ -44,43 +52,17 @@ namespace sdds {
       return cout;
    }
 
-   int numDigitsOfAcc(int number) {//how to check the first digit is not 0???
-       int noOfDigits = 0;
-      
-       int i(0);
-       for (i = 0; number > 0; i++) {
-           number = number / 10;
-           noOfDigits++;
-       }
-       return noOfDigits;
-      
+   
+   Account::operator bool() const  {
+       return m_balance >= 0.0 && this->m_number>=10000 && this->m_number<=99999;                   
    }
+   
 
-  
-   //type conversion operators
-  /* returns true if the account is valid and otherwise
-       false.This operator can not modify the account 
-       object.*/
-
-
-   //An Account is considered valid if the account 
-   //    number is a 5 digit integer with a zero or 
-   //    positive balance.
-   Account::operator bool() const  {//how to xheck its int???
-       return m_balance >= 0.0 && (numDigitsOfAcc(this->m_number) == 5);                              //how to check the first number is not 0
-   }
-   //calling int is wrong
-
-
-
-  /* returns the account number.This operator can not
-       modify the account object.*/
    Account::operator int() const   {
        return (int)m_number;
    }
 
-  /* returns the balance value.This operator can not
-       modify the account object.*/
+ 
    Account::operator double() const {
        return (double)m_balance;
    }
@@ -90,27 +72,20 @@ namespace sdds {
    }
 
 
-
-
    //Binary member operators
 
-
-//Note: All the binary member operators will not 
-//take any action if the account is in an invalid state.
-
-
-   Account& Account::operator=(int number)   {//i changed the numOddigits f so it can be used for input
-      // if (~*this)  (*this).setEmpty();           //or setEmpty()
-         if(numDigitsOfAcc(number) !=5)     (*this).setEmpty();
-         else if (!m_number) {     //account is new
-           this->m_number = number;                   //(int)*this?
+   Account& Account::operator=(int number)   {
+     
+         if(number<10000 || number>99999)     (*this).setEmpty();
+         else if (!m_number) {                                   //account is new
+           this->m_number = number;                              //(int)*this?
        }
        return *this;
    }
 
    //A = B;
-   Account& Account::operator=(Account& rightOper)  {//left operator is the current obj////////////////////////////////
-       if (  /**this && */!this->m_number && (bool)rightOper) {
+   Account& Account::operator=(Account& rightOper)  {
+       if ( !this->m_number && (bool)rightOper) {
            this->m_number = rightOper.m_number;
            this->m_balance = rightOper.m_balance;
            rightOper.m_balance=0.0;
@@ -152,21 +127,14 @@ namespace sdds {
    }
   
 
-
-
-
-
-
-
-
 //Binary helper operators
 
    double operator+(const Account& leftOper, const Account& rightOper)  {
 
-       //return leftOper && rightOper?(double)leftOper + (double)rightOper:0;
+                                                                         //return leftOper && rightOper?(double)leftOper + (double)rightOper:0;
        double sum = 0.0;
-       if ((bool)leftOper && (bool)rightOper) {  //correct for being valid?????????????????????????????????????????????????????????????????????????????
-           sum = (double)leftOper + (double)rightOper;           //leftOper.m_balance + rightOper.m_balance;
+       if ((bool)leftOper && (bool)rightOper) {  
+           sum = (double)leftOper + (double)rightOper;        
        }
        else sum = 0.0;
        return sum;
@@ -176,4 +144,15 @@ namespace sdds {
        return leftOper+=(double)rightOper;
    }
 
+   //int numDigitsOfAcc(int number) {//how to check the first digit is not 0???
+   //    int noOfDigits = 0;
+   //   
+   //    int i(0);
+   //    for (i = 0; number > 0; i++) {
+   //        number = number / 10;
+   //        noOfDigits++;
+   //    }
+   //    return noOfDigits;
+   //   
+   //}
 }

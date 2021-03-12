@@ -1,3 +1,11 @@
+//Name: Mahrokh Sadrolodabaee
+//Seneca email: msadrolodabaee@myseneca.ca
+//Seneca Student ID: 159436195
+//Date: 02.18.2021
+//I have done all the coding by myselfand only copied the code that my professor
+//provided to complete my workshopsand assignments.
+////////////////////////////////////////////////
+
 #ifndef SDDS_ACCOUNT_H_
 #define SDDS_ACCOUNT_H_
 #include <iostream>
@@ -22,10 +30,11 @@ namespace sdds {
       Account& operator-=(double balance);
       Account& operator<<(Account& rightOper);
       Account& operator>>(Account& rightOper);
-     // friend double operator+(const Account& leftOper, const Account& rightOper);
+     // friend double operator+(const Account& leftOper, const Account& rightOper);//noooo
    };
-   int numDigitsOfAcc(int number);    //mine??????????????????????????????????????????????????????????????????????????????????????????????????????
+  
    double operator+(const Account& leftOper, const Account& rightOper);
    double operator+=(double& leftOper, const Account& rightOper);
+   //int numDigitsOfAcc(int number);    //nooooooooo
 }
 #endif // SDDS_ACCOUNT_H_
