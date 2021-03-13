@@ -10,9 +10,6 @@ using namespace std;
 
 namespace sdds {
 
-	Line::operator double () const {
-		return (double)m_value;
-	}
 
 	void Stats:: setEmpty(){
 		delete[] m_filename;
@@ -109,10 +106,6 @@ namespace sdds {
 		return *this;
 	}
 
-
-
-	
-
 	void Stats::setNoOfNumbers() {
 
 		ifstream f(m_filename);
@@ -136,14 +129,14 @@ namespace sdds {
 
 			delete[] m_textNumbers;
 			m_textNumbers = nullptr;
-			m_textNumbers = new Line[m_noOfNumbers];
+			m_textNumbers = new double[m_noOfNumbers];
 			//string temp;
 			double temp;
 			ifstream f(m_filename);
 
 			while (f>> temp) {//extraction operator
-				//getignore?????????????????????????????????????????????
-				m_textNumbers[i].m_value = temp;//???????????????????????????????????????????????????????????????????????????????????????
+				f.ignore();                                            //getignore?????????????????????????????????????????????
+				m_textNumbers[i]= temp;//???????????????????????????????????????????????????????????????????????????????????????
 				i++;
 			}
 			m_noOfNumbers = i;
@@ -155,7 +148,7 @@ namespace sdds {
 		ofstream f(fileName);//open a new file
 		unsigned i(0);
 		if (f.is_open()) {
-			for (i = 0; /*i < m_noOfNumbers*/m_textNumbers[i]; i++)  f << m_textNumbers[i];
+			for (i = 0; i < m_noOfNumbers/*m_textNumbers[i]*/; i++)  f << m_textNumbers[i];
 
 		}
 
@@ -179,7 +172,7 @@ namespace sdds {
 		double dummy =0.00;//If the Stats object is empty, it should return the reference of a dummy double member variable.
 		double& ret = dummy;
 		if (*this) {
-			ret = m_textNumbers[idx % m_noOfNumbers].m_value;
+			ret = m_textNumbers[idx % m_noOfNumbers];
 		}
 		return ret;//????????????????????????????????????????????????????????????????????????????????????????????????????
 
@@ -201,7 +194,7 @@ namespace sdds {
 	double Stats::operator[](unsigned idx) const{
 		double ret = 0.00;
 		if (*this) {
-			ret = m_textNumbers[idx % m_noOfNumbers].m_value;
+			ret = m_textNumbers[idx % m_noOfNumbers];
 		}
 		return ret;
 	}
@@ -220,16 +213,32 @@ namespace sdds {
 
 	void Stats::sort(bool ascending)	{
 		int i, j;
-		Line temp;
-		for (i = m_noOfNumbers - 1; i > 0; i--) {
-			for (j = 0; j < i; j++) {
-				if (m_textNumbers[j].m_value > m_textNumbers[j + 1].m_value) {
-					temp = m_textNumbers[j];
-					m_textNumbers[j].m_value = m_textNumbers[j+1].m_value;
-					m_textNumbers[j + 1].m_value=temp;
+		double temp;
+		if (ascending == true) {
+			
+			for (i = m_noOfNumbers - 1; i > 0; i--) {
+				for (j = 0; j < i; j++) {
+					if (m_textNumbers[j] > m_textNumbers[j + 1]) {
+						temp = m_textNumbers[j];
+						m_textNumbers[j] = m_textNumbers[j + 1];
+						m_textNumbers[j + 1] = temp;
+					}
+				}
+
+			}
+		}
+
+		else {
+
+			for (i = 0; i < m_noOfNumbers; ++i){
+				for (j = i + 1; j < m_noOfNumbers; ++j){
+					if (m_textNumbers[i] < m_textNumbers[j]){
+						temp = m_textNumbers[i];
+						m_textNumbers[i] = m_textNumbers[j];
+						m_textNumbers[j] = temp;
+					}
 				}
 			}
-
 		}
 	}
 
@@ -257,7 +266,7 @@ namespace sdds {
 		unsigned i(0);
 		unsigned count(0);
 		for (i = 0; m_textNumbers[i]; i++) {
-			if (m_textNumbers[i].m_value >= min && m_textNumbers[i].m_value <= max)  ++count;				
+			if (m_textNumbers[i]>= min && m_textNumbers[i]<= max)  ++count;				
 		}
 		return count;
 	}
@@ -266,8 +275,16 @@ namespace sdds {
 			ostr << m_filename << endl;
 			for (int i = 0; m_filename[i]; i++) ostr << "=";
 			ostr << endl;
-			for (unsigned i = 0; i < m_noOfNumbers; i++) {
-				ostr << m_textNumbers;
+			/*for (unsigned i = 0; i < m_noOfNumbers; i++) {
+				ostr << ;
+			}*/
+			for (int i = 0; i < m_noOfNumbers; i += 15)
+			{
+				for (int j = i; j < 15 + i && j < 51; j++)
+				{
+					cout << 88 << "\t";
+				}
+				cout << endl;
 			}
 
 		}
@@ -320,3 +337,9 @@ namespace sdds {
 		return obj.getFile(is);
 	}
 }
+
+
+
+
+
+

@@ -3,24 +3,12 @@
 #include <iostream>
 namespace sdds {
 
-    class Line {
-        double m_value=0; // 1 number
-        operator double ()const; //
-        Line() {};
-      //  Line& operator=(double);
-      //  ~Line();
-        // copy and copy assignment prevention goes here
-      //  Line(const Line& copyfrom);
-      //  Line& operator=(const Line&);
-        friend class Stats;
-
-    };
 
 
 
    class Stats {
        char* m_filename;// name of file
-       Line* m_textNumbers; //array of all numbers
+       double* m_textNumbers; //array of all numbers
        unsigned m_noOfNumbers;
        unsigned m_columnWidth;
        unsigned m_noOfColumns;
@@ -62,3 +50,6 @@ namespace sdds {
 
 }
 #endif
+
+
+
