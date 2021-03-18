@@ -7,12 +7,13 @@ namespace sdds {
 
 
    class Stats {
-       char* m_filename;// name of file
-       double* m_textNumbers; //array of all numbers
-       unsigned m_noOfNumbers;
-       unsigned m_columnWidth;
-       unsigned m_noOfColumns;
-       unsigned m_precision;;
+      double dummy = 0.00;
+       char* m_filename = nullptr;// name of file
+       double* m_textNumbers = nullptr; //array of all numbers
+       unsigned m_noOfNumbers = 0u;
+       unsigned m_columnWidth = 0u;
+       unsigned m_noOfColumns = 0u;
+       unsigned m_precision = 0u;
        //unsigned m_noOfLines;
        void setNoOfNumbers();
        void setFilename(const char* fname);
