@@ -1,7 +1,9 @@
 #include <iostream>
 #include <iomanip>
+#include <cmath>
 #include "Time.h"
 #include "utils.h"
+
 using namespace std;
 namespace sdds {
 	Time& Time::setToNow()	{
@@ -45,18 +47,16 @@ namespace sdds {
 		return istr;
 	}
 	Time& Time::operator-=(const Time& D){
-		m_min=	m_min > D.m_min ? m_min - D.m_min : m_min - D.m_min+1440;
-		/*int timeDif; int fix = 1440;
-		timeDif = m_min - D.m_min; 
-		if (timeDif >= 0) { m_min -= D.m_min; }
-		else { m_min = m_min - D.m_min + fix; }*/
+		//m_min=	m_min > D.m_min ? m_min - D.m_min : m_min - D.m_min + 1440;
+		int n = ceil((double)D.m_min / (24 * 60));                                                //syntax of tis shit
+		m_min= m_min >= D.m_min ? m_min - D.m_min : (m_min + 24 * 60 * n) - D.m_min;
 			return *this;
 
 	}
 	Time Time::operator-(const Time& D) const {
 
-		int n = ceil(D.m_min / 24 * 60);
-		int ret = m_min >= D.m_min ? m_min - D.m_min :  m_min * 24 *60 * n - D.m_min;
+		int n = ceil((double)D.m_min / (24 * 60));
+		int ret = m_min >= D.m_min ? m_min - D.m_min : ( m_min + 24 *60 * n )- D.m_min;
 		return Time(ret);
 	}
 	Time& Time::operator+=(const Time& D){
