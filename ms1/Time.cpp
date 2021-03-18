@@ -24,29 +24,39 @@ namespace sdds {
 		ostr << ":" << setw(2)<<setfill('0')<<m_min%60;
 		return ostr;
 	}
-	std::istream& Time::read(std::istream& istr)	{
+	std::istream& Time::read(std::istream& istr)	{//when u read data from file or console plz SAVEEEEEEEEEEEE!!!!!!!!
 		int hour;
 		int min;
 		char ch;
 		bool done = false;
 		istr >> hour;
-		//while(!done)
-		if(hour<0) istr.setstate(ios::failbit);
 		istr.get(ch);
-		if (ch != ':')  istr.setstate(ios::failbit);
 		istr >> min;
-		if (min < 0) istr.setstate(ios::failbit);
+
+
+
+		//istr.ignore();//????
+		//while(!done)
+		if(hour<0  || min < 0 || ch!= ':') istr.setstate(ios::failbit);
+		else m_min = hour * 60 + min;
+
+		/*if (ch != ':')  istr.setstate(ios::failbit);
+		if (min < 0) istr.setstate(ios::failbit);*/
 		return istr;
 	}
 	Time& Time::operator-=(const Time& D){
-		int n = (D.m_min % 24) + 1;
-		m_min > D.m_min ? m_min - D.m_min : m_min +24* n - D.m_min;
+		m_min=	m_min > D.m_min ? m_min - D.m_min : m_min - D.m_min+1440;
+		/*int timeDif; int fix = 1440;
+		timeDif = m_min - D.m_min; 
+		if (timeDif >= 0) { m_min -= D.m_min; }
+		else { m_min = m_min - D.m_min + fix; }*/
 			return *this;
 
 	}
-	Time Time::operator-(const Time& D) const{
-		int n = (D.m_min % 24) + 1;
-		int ret=m_min > D.m_min ? m_min - D.m_min : m_min + 24 * n - D.m_min;
+	Time Time::operator-(const Time& D) const {
+
+		int n = ceil(D.m_min / 24 * 60);
+		int ret = m_min >= D.m_min ? m_min - D.m_min :  m_min * 24 *60 * n - D.m_min;
 		return Time(ret);
 	}
 	Time& Time::operator+=(const Time& D){
