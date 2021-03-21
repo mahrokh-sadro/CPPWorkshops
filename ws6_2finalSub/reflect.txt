@@ -1,0 +1,19 @@
+//Name: Mahrokh Sadrolodabaee
+//Seneca email: msadrolodabaee@myseneca.ca
+//Seneca Student ID: 159436195
+//Date: 03.20.2021
+
+Whenever we have classes with resources we need to follow the rule of 3. We have to have destructor, copy 
+constructor and copy assignment. We either have to implement copy constructor and copy assignment  or prevent
+ copying and assigning in a class by setting their prototypes to zero in header file.
+Copy constructor is used to create a new object out of an existing one of the same, but assignment operator is used 
+when copying data from an existing object to another existing object. How to extract n unknown number of characters
+ from the standard input and display the characters on the standard output object:we need to use std::getline() helper function to read from standard input, to use this function we need a c++ srting and
+ an instance of istream class. then we get the size of string using length() function and dynamically allocate proper
+ size and create a C-style null-terminated string.
+
+When it comes to files, an instance of ofstream creates , open and write to a file,while an instance of ifstream 
+reads from a file. The main difference between an instance of istreams and getline() is that the delim of the former 
+is space meaning it reads 1 word, but the delim of the latter is \n by default(you can change it ).
+
+
