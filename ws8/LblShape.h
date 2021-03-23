@@ -20,7 +20,7 @@ namespace sdds {
 	public:
 		LblShape();
 		LblShape(const char* label);
-		~LblShape();
+		virtual ~LblShape();
 		LblShape(const LblShape&) = delete;
 		LblShape& operator=(const LblShape&)=delete;
 		std::istream& getSpecs(std::istream& is=std::cin);
