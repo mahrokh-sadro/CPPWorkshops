@@ -1,18 +1,18 @@
+//Name: Mahrokh Sadrolodabaee
+//Seneca email: msadrolodabaee@myseneca.ca
+//Seneca Student ID: 159436195
+//Date: 03.22.2021
+//I have done all the coding by myselfand only copied the code that my professor
+//provided to complete my workshopsand assignments.
+////////////////////////////////////////////////
 #define _CRT_SECURE_NO_WARNINGS
-
 #include <iostream>
 #include <string>
 #include <cstring>
-
 #include "LblShape.h"
 
 using namespace std;
 namespace sdds {
-
-
-
-
-
 
 	void LblShape::setLabel(const char* label)
 	{
@@ -45,26 +45,11 @@ namespace sdds {
 	{
 		delete[] m_label;
 	}
-	/*Reads a comma - delimited Cstring form istream :
-	Override the Shape::getSpecs pure virtual function
-		to receive a Cstring(a label) from istream up to
-		the ',' character(and then extract and ignore the comma).
-		Afterward, follow the same logic as was done in the one 
-		argument constructor; allocate memory large enough to 
-		hold the Cstringand copy the Cstring into the newly allocated memory.*/
-
 
 	istream& LblShape::getSpecs(std::istream& is)
 	{
 		string str;
-	//	is.ignore();
-	//	is.ignore();
-		if (getline(is, str, ','))//???
-		{
-			
-			setLabel(str.c_str());
-
-		}
+		if (getline(is, str, ',')) setLabel(str.c_str());
 		return is;
 
 	}

@@ -1,3 +1,11 @@
+//Name: Mahrokh Sadrolodabaee
+//Seneca email: msadrolodabaee@myseneca.ca
+//Seneca Student ID: 159436195
+//Date: 03.22.2021
+//I have done all the coding by myselfand only copied the code that my professor
+//provided to complete my workshopsand assignments.
+////////////////////////////////////////////////
+
 #ifndef SDDS_LBLSHAPE_H_
 #define SDDS_LBLSHAPE_H_
 
@@ -15,13 +23,9 @@ namespace sdds {
 		~LblShape();
 		LblShape(const LblShape&) = delete;
 		LblShape& operator=(const LblShape&)=delete;
-		/*virtual*/ std::istream& getSpecs(std::istream& is=std::cin);
-
-
+		std::istream& getSpecs(std::istream& is=std::cin);
 
 	};
 		
-
-
 }
 #endif
