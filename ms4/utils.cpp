@@ -1,5 +1,5 @@
 /* Citation and Sources...
-Final Project Milestone 3
+Final Project Milestone 4
 Module: utils
 Filename: utils.cpp
 Version 1.0
@@ -7,7 +7,7 @@ Author	Mahrokh Sadrolodabaee
 Revision History
 -----------------------------------------------------------
 Date      Reason
-2020/3/25  Preliminary release
+2021/3/28  Preliminary release
 -----------------------------------------------------------
 I got the idea for getcstr() from
 https://stackoverflow.com/questions/18286815/input-string-without-using-c-string
