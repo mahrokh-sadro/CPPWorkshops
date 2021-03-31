@@ -5,6 +5,10 @@
 //I have done all the coding by myselfand only copied the code that my professor
 //provided to complete my workshopsand assignments.
 ////////////////////////////////////////////////
+
+#ifndef SDDS_SEARCHNLIST_H_
+#define SDDS_SEARCHNLIST_H_ 
+
 #include "Collection.h"
 namespace sdds {
 
@@ -36,6 +40,6 @@ namespace sdds {
 	}
 
 }
-
+#endif
 
 
