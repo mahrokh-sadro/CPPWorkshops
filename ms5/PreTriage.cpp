@@ -151,9 +151,8 @@ namespace sdds {
 
     
        
-       // m_lineup[i]
-       // int count(0);
-       // int Tcount(0);
+    
+      
         int i(0);
         Patient* ptr(nullptr);
         for (i = 0; i < maxNoOfPatients && fin; i++)
@@ -161,13 +160,11 @@ namespace sdds {
             if (getchar() == 'C')
             {
                 ptr = new CovidPatient();///()????
-                // count++;
             }
             if (getchar() == 'T')
 
             {
                 ptr = new TriagePatient();
-                //count++;
             }
 
 
