@@ -42,14 +42,7 @@ namespace sdds {
     PreTriage::~PreTriage()//////
     {
         ofstream fout(m_dataFilename);////?????????????????????????????????????????????????????????y skipped????
-     //   if (fout)
-
-//{
-     //   00:15, 00 : 05
-        //C, aaa, 111111111, 1, 01 : 00
-       //     T, bbb, 222222222, 1, 01 : 01, bbb bbb bbb
-
-
+  
             cout << "Saving Average Wait Times," << endl
                 << "  COVID Test: " << m_averCovidWait << endl
                 << "  Triage: " << m_averTriageWait << endl
@@ -63,9 +56,7 @@ namespace sdds {
                 m_lineup[i]->csvWrite() << endl;
                 m_lineup[i]->csvWrite(fout) << endl;                                         //why doesnt show with fout????
             }
-            //    cout << "m_lineupSize/~                                                                " << m_lineupSize << endl;
-
-     //   }
+           
 
 
             //All the Patients pointed by the elements of the m_lineup array are deleted.
