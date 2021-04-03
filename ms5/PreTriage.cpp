@@ -157,6 +157,11 @@ namespace sdds {
         Patient* ptr(nullptr);
         for (i = 0; i < maxNoOfPatients && fin; i++)
         {
+		
+		
+//             fin.get(chh);
+//             fin.ignore(1000, '\n');
+//              if(chh=='C')
             if (getchar() == 'C')
             {
                 ptr = new CovidPatient();///()????
