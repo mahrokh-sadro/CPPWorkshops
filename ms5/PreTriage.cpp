@@ -139,19 +139,6 @@ namespace sdds {
     }
 
 
-
-    void PreTriage::load()
-    {
-        cout << "Loading data..." << endl;
-
-        ifstream fin(m_dataFilename);
-        if (fin) 
-        {
-            fin >> m_averCovidWait;//reading fom afile
-            fin.ignore();
-            fin >> m_averTriageWait;
-            fin.ignore();
-        }
        /* have a patient - pointer
             loop from 0 to the maximum number of patients and stop if reading fails
             read the first character and ignore the comma
@@ -169,73 +156,63 @@ namespace sdds {
                 end if
                 end loop*/
 
-        Patient* ptr;
+         void PreTriage::load()
+    {
+        cout << "                                                                          load is called      " << endl;
+
+        cout << "Loading data..." << endl;
+
+        ifstream fin;
+        fin.open(m_dataFilename, ios::in);
+    
+        Patient* ptr=nullptr;
         int i(0);
-        char ch(0);
-        string str;
-        int cp(0);
-        int tp(0);
+        char ch(0);     
         if (fin.fail())
         {
             fin.clear();
-            fin.ignore(3000, '\n');
+            fin.open(m_dataFilename, ios::out);
             fin.close();
         }
-        for (i = 0; i < 100 /*&&*/ /*!fin.fail()*/; i++)/////fixxxxxxxxxxxxxxxx
-        {
-            getline(fin, str);
-            ch = str[0];
-            if (ch == 'C')
+        else {
+
+            fin >> m_averCovidWait;
+            fin.ignore();
+            fin >> m_averTriageWait;
+            fin.ignore();
+
+            for (i = 0; i < maxNoOfPatients; i++)
             {
-                fin.ignore();
-                ptr = new CovidPatient();
-                ptr->fileIO(true);
-
-                ptr->csvRead(fin);
-       //         ptr->csvRead(cin);
-
-                ptr->fileIO(false);
-                m_lineup[i]=ptr;//????
-
- 
-                m_lineupSize++;
-            //    delete ptr;
-             //   ptr = nullptr;
-             //   fin.clear();
-
+               
+                fin >> ch;
+                fin.ignore(',');
+                if (ch == 'C')      ptr = new CovidPatient();
+                if (ch == 'T')      ptr = new TriagePatient();
+                if (ptr)
+                {
+                    ptr->fileIO(true);
+                    ptr->csvRead(fin);
+                    ptr->fileIO(false);
+                    m_lineup[i] = ptr;
+                    m_lineupSize++;
+                  //  delete ptr;
+                   // ptr = nullptr;
+                }
             }
-
-            if (ch == 'T')
+            if (m_lineupSize >= 100)
             {
-                fin.ignore();
-                ptr = new TriagePatient;
-                ptr->fileIO(true);
-                ptr->csvRead(fin);
-                ptr->fileIO(false);
-                m_lineup[i]=ptr;//????
-                m_lineupSize++;
-               // delete ptr;
-             //   ptr = nullptr;
-
-                //fin.clear();
+                cout << "Warning: number of records exceeded 100" << endl
+                    << "100 Records imported...";
             }
-
+            else if (m_lineupSize == 0) cout << "No data or bad data file!";
+            else     cout << m_lineupSize << " Records imported...";
+            cout << endl << endl;
+           // fin.close();
 
         }
-
-
-
-        if (m_lineupSize >= 100)
-        {
-            cout << "Warning: number of records exceeded 100" << endl
-                << "100 Records imported...";
-        }
-        else if (m_lineupSize ==0) cout << "No data or bad data file!";
-        else     cout<< m_lineupSize <<" Records imported...";
-        cout << endl << endl;
-        fin.clear();
-
     }
+          
+
                      
  
     void PreTriage::reg()
