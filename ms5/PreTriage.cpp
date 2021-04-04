@@ -199,7 +199,7 @@ namespace sdds {
 
  
                 m_lineupSize++;
-                delete ptr;
+            //    delete ptr;
              //   ptr = nullptr;
              //   fin.clear();
 
@@ -214,7 +214,7 @@ namespace sdds {
                 ptr->fileIO(false);
                 m_lineup[i]=ptr;//????
                 m_lineupSize++;
-                delete ptr;
+               // delete ptr;
              //   ptr = nullptr;
 
                 //fin.clear();
