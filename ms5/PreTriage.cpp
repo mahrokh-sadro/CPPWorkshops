@@ -5,6 +5,10 @@
 #include <fstream>
 
 #include <cstring>
+
+
+#include <string>
+
 #include "PreTriage.h"
 #include "CovidPatient.h"
 #include "TriagePatient.h"
@@ -25,15 +29,14 @@ namespace sdds {
         m_pMenu("Select Type of Admittance:\n1- Covid Test\n2- Triage",2)
        
 	    {
-            delete[] m_dataFilename;//???????????????????????????????????????????????????????????????????
+            delete[] m_dataFilename;
             if (dataFilename)
             {
                 m_dataFilename = new char[strlen(dataFilename) + 1];
                 strcpy(m_dataFilename, dataFilename);
             }
             load();
-    //        cout << "m_lineupSize/const                                                            " << m_lineupSize << endl;
-
+    
 	    }
 
 
@@ -41,8 +44,9 @@ namespace sdds {
 
     PreTriage::~PreTriage()//////
     {
-        ofstream fout(m_dataFilename);////?????????????????????????????????????????????????????????y skipped????
-  
+        ofstream fout(m_dataFilename);
+    
+
             cout << "Saving Average Wait Times," << endl
                 << "  COVID Test: " << m_averCovidWait << endl
                 << "  Triage: " << m_averTriageWait << endl
@@ -56,7 +60,8 @@ namespace sdds {
                 m_lineup[i]->csvWrite() << endl;
                 m_lineup[i]->csvWrite(fout) << endl;                                         //why doesnt show with fout????
             }
-           
+
+     //   }
 
 
             //All the Patients pointed by the elements of the m_lineup array are deleted.
@@ -66,14 +71,12 @@ namespace sdds {
             for (int i = 0; /*m_lineup[i]*/i < m_lineupSize; i++)
             {
                 
-
                 delete m_lineup[i];
                 
             }
 
 
-
-       // m_lineup[0]=0;
+     //       delete[] m_lineup;
         delete[] m_dataFilename;
         m_dataFilename=nullptr;
         cout << "done!"<<endl;
@@ -114,9 +117,9 @@ namespace sdds {
 
 
 
-    void PreTriage::removePatientFromLineup(int index)//why i ended up removing []?????
+    void PreTriage::removePatientFromLineup(int index)// i ended up removing []?????
     {
-        removeDynamicElement(m_lineup, index, m_lineupSize);//size or max?????
+        removeDynamicElement(m_lineup, index, m_lineupSize);//size?????
     }
 
 
@@ -140,6 +143,7 @@ namespace sdds {
     void PreTriage::load()
     {
         cout << "Loading data..." << endl;
+
         ifstream fin(m_dataFilename);
         if (fin) 
         {
@@ -148,45 +152,78 @@ namespace sdds {
             fin >> m_averTriageWait;
             fin.ignore();
         }
+       /* have a patient - pointer
+            loop from 0 to the maximum number of patients and stop if reading fails
+            read the first character and ignore the comma
+            if the character is 'C'
+                in the patient - pointer instantiate a Covid Patient
+                otherwise, if the character is 'T'
+                in the patient - pointer instantiate a Triage Patient
+                endif
+                If Instantiation happened
+                Set the patient to file IO
+                Read the patient from the file
+                Set the Patient not to do file IO
+                copy the patient pointer to the lineup array of pointers
+                increase the lineup size
+                end if
+                end loop*/
 
-    
-       
-    
-      
+        Patient* ptr;
         int i(0);
-        Patient* ptr(nullptr);
-        for (i = 0; i < maxNoOfPatients && fin; i++)
+        char ch(0);
+        string str;
+        int cp(0);
+        int tp(0);
+        if (fin.fail())
         {
-		
-		
-//             fin.get(chh);
-//             fin.ignore(1000, '\n');
-//              if(chh=='C')
-            if (getchar() == 'C')
-            {
-                ptr = new CovidPatient();///()????
-            }
-            if (getchar() == 'T')
-
-            {
-                ptr = new TriagePatient();
-            }
-
-
-            if (ptr)
-            {
-                ptr->fileIO(true);//using file
-                ptr->csvRead();////////???????????
-                //cin >> *ptr;
-                ptr->fileIO(false);//console
-                //        copy the patient pointer to the lineup array of pointers??????????????????????????
-              //  int idx=nex
-                m_lineup[m_lineupSize] = ptr;
-                m_lineupSize ++;
-
-
-            }
+            fin.clear();
+            fin.ignore(3000, '\n');
+            fin.close();
         }
+        for (i = 0; i < 100 /*&&*/ /*!fin.fail()*/; i++)/////fixxxxxxxxxxxxxxxx
+        {
+            getline(fin, str);
+            ch = str[0];
+            if (ch == 'C')
+            {
+                fin.ignore();
+                ptr = new CovidPatient();
+                ptr->fileIO(true);
+
+                ptr->csvRead(fin);
+       //         ptr->csvRead(cin);
+
+                ptr->fileIO(false);
+                m_lineup[i]=ptr;//????
+
+ 
+                m_lineupSize++;
+                delete ptr;
+             //   ptr = nullptr;
+             //   fin.clear();
+
+            }
+
+            if (ch == 'T')
+            {
+                fin.ignore();
+                ptr = new TriagePatient;
+                ptr->fileIO(true);
+                ptr->csvRead(fin);
+                ptr->fileIO(false);
+                m_lineup[i]=ptr;//????
+                m_lineupSize++;
+                delete ptr;
+             //   ptr = nullptr;
+
+                //fin.clear();
+            }
+
+
+        }
+
+
 
         if (m_lineupSize >= 100)
         {
@@ -196,7 +233,7 @@ namespace sdds {
         else if (m_lineupSize ==0) cout << "No data or bad data file!";
         else     cout<< m_lineupSize <<" Records imported...";
         cout << endl << endl;
-    //    cout << "m_lineupSize/load                                                                 " << m_lineupSize << endl;
+        fin.clear();
 
     }
                      
@@ -206,7 +243,7 @@ namespace sdds {
         if (m_lineupSize >= maxNoOfPatients)
         {
             cout << "Line up full!" << endl;
-            exit(0);
+            return;
         }
 
         int selec;
@@ -229,6 +266,7 @@ namespace sdds {
         //extract the patient from cin???????????????
       //  cin >> *m_lineup[m_lineupSize];
         m_lineup[m_lineupSize]->read(/*cin*/);
+        cin.clear();
         cout << endl
             << "******************************************" << endl;
         m_lineup[m_lineupSize]->write();        //???????????????????????????????????????????????????????????
@@ -237,7 +275,6 @@ namespace sdds {
             << "******************************************" << endl << endl;
         m_lineupSize++;
 
-    //    cout << "m_lineupSize  /reg                                                               " << m_lineupSize << endl;
 
     
     }
@@ -265,7 +302,6 @@ namespace sdds {
         cout << "******************************************" << endl<<endl;
         setAverageWaitTime(*m_lineup[idx]);
         removePatientFromLineup(idx);
-   //    cout << "m_lineupSize /admit                                                               " << m_lineupSize << endl;
 
     }
 
