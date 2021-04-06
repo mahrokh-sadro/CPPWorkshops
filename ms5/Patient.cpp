@@ -80,11 +80,12 @@ namespace sdds {
 
 	std::istream& Patient::csvRead(std::istream& is)
 	{
-		delete[] m_patientName;
 		string str;
 		getline(is, str,',');
 		m_patientName = new char[str.length() + 1];
 		strcpy(m_patientName, str.c_str());
+		delete[] m_patientName;
+
 		is >> m_ohipNum;
 		is.ignore();
         return A.csvRead(is);
