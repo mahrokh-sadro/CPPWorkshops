@@ -145,7 +145,6 @@
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Patient.cpp" />
     <ClCompile Include="PreTriage.cpp" />
-    <ClCompile Include="Source.cpp" />
     <ClCompile Include="Ticket.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="TriagePatient.cpp" />
