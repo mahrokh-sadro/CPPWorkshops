@@ -67,11 +67,9 @@ namespace sdds {
        Patient::csvRead(istr);
        istr.ignore();
        std::string str;
-       std::getline(istr,str/*,'\n'*/);
-     //  int len = str.length();
+       std::getline(istr,str);
        m_symptoms = new char[str.length() + 1];
        strcpy(m_symptoms, str.c_str());
-    //   m_symptoms[len] = '\0';
        nextTriageTicket = Patient::number() + 1;
        return istr;
     }
