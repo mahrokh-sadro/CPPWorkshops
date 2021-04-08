@@ -1,3 +1,19 @@
+//#ifndef SDDS_IOABLE_H
+//#define SDDS_IOABLE_H
+//#include <iostream>
+//namespace sdds {
+//    class IOAble{
+//        public:
+//            virtual std::ostream& csvWrite(std::ostream&) const = 0;
+//            virtual std::istream& csvRead(std::istream&) = 0;
+//            virtual std::ostream& write(std::ostream&) const = 0;
+//            virtual std::istream& read(std::istream&) = 0;
+//            virtual ~IOAble() {};
+//    };
+//    std::ostream& operator<<(std::ostream &left, const IOAble &obj);
+//    std::istream& operator>>(std::istream &left, IOAble &obj);
+//}
+//#endif
 /* Citation and Sources...
 Final Project Milestone 4
 Module: IOAble
@@ -22,7 +38,7 @@ namespace sdds {
 
 	class IOAble {
 	public:
-		virtual std::ostream& csvWrite(std::ostream& os=std::cout) const = 0;
+		virtual std::ostream& csvWrite(std::ostream& os = std::cout) const = 0;
 		virtual std::istream& csvRead(std::istream& is = std::cin) = 0;
 		virtual std::ostream& write(std::ostream& os = std::cout) const = 0;
 		virtual std::istream& read(std::istream& is = std::cin) = 0;

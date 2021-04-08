@@ -1,4 +1,6 @@
+
 //author:Fardad Soleimanloo
+
 #ifndef SDDS_TICKET_H_
 #define SDDS_TICKET_H_
 #include "Time.h"
@@ -8,7 +10,7 @@ namespace sdds {
       Time m_time;
       int m_number;
    public:
-      Ticket(int number);
+      Ticket(int number = 0);
       operator Time()const;
       int number()const;
       void resetTime();

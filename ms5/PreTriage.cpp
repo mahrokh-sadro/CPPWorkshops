@@ -1,6 +1,8 @@
+
 #define _CRT_SECURE_NO_WARNINGS
 
-
+//////////////////////////////////////////////////////////////////use getcstr()where needed
+///////////////////////////////////////add id
 #include <iostream>
 #include <fstream>
 
@@ -15,110 +17,110 @@
 //#include "Time.h"
 #include "utils.h"
 
-
-
 using namespace std;
 namespace sdds {
-
-
-	PreTriage::PreTriage(const char* dataFilename)
+    
+    PreTriage::PreTriage(const char* dataFilename)
         :
         m_averCovidWait{ 15 },
         m_averTriageWait{ 5 },
-        m_appMenu("General Hospital Pre-Triage Application\n1- Register\n2- Admit",2),
-        m_pMenu("Select Type of Admittance:\n1- Covid Test\n2- Triage",2)
-       
-	    {
-            delete[] m_dataFilename;
-            if (dataFilename)
-            {
-                m_dataFilename = new char[strlen(dataFilename) + 1];
-                strcpy(m_dataFilename, dataFilename);
-            }
-            load();
-    
-	    }
+        m_appMenu("General Hospital Pre-Triage Application\n1- Register\n2- Admit", 2),
+        m_pMenu("Select Type of Admittance:\n1- Covid Test\n2- Triage", 2)
 
+    {
+        delete[] m_dataFilename;///////////////////////////////////////////???????????????????????????????/y doesnt crash
+        if (dataFilename)
+        {
+            m_dataFilename = new char[strlen(dataFilename) + 1];
+            strcpy(m_dataFilename, dataFilename);
+        }
+        load();
 
-  
+    }
 
     PreTriage::~PreTriage()//////
     {
-        ofstream fout(m_dataFilename);
-    
+       // cout << "                                                                          destructor is called      " << endl;
 
-            cout << "Saving Average Wait Times," << endl
-                << "  COVID Test: " << m_averCovidWait << endl
-                << "  Triage: " << m_averTriageWait << endl
-                << "Saving m_lineup..." << endl;
-            fout << m_averCovidWait << ", " << m_averTriageWait << endl;
+        ofstream fout(m_dataFilename);////?????????????????????????????????????????????????????????y skipped????
 
 
-            for (int i = 0; /*m_lineup[i]*/i < m_lineupSize; i++)
-            {
-                cout << 1 << "- ";
-                m_lineup[i]->csvWrite() << endl;
-                m_lineup[i]->csvWrite(fout) << endl;                                         //why doesnt show with fout????
-            }
-
-     //   }
+        cout << "Saving Average Wait Times," << endl
+            << "   COVID Test: " << m_averCovidWait << endl
+            << "   Triage: " << m_averTriageWait << endl
+            << "Saving m_lineup..." << endl;
+        fout << m_averCovidWait << ", " << m_averTriageWait << endl;
 
 
-            //All the Patients pointed by the elements of the m_lineup array are deleted.
-            //    data file name is deleted.
-            //    the confirmation massage "done!" is printed on the screen at the end.
+        for (int i = 0; /*m_lineup[i]*/i < m_lineupSize; i++)
+        {
+            cout << i+1 << "- ";
+            m_lineup[i]->csvWrite() << endl;            //Patient
+            m_lineup[i]->csvWrite(fout) << endl;                   //why doesnt show with fout????
+        }
+        //     cout << "m_lineupSize/~                                                                " << m_lineupSize << endl;
 
-            for (int i = 0; /*m_lineup[i]*/i < m_lineupSize; i++)
-            {
-                
-                delete m_lineup[i];
-                
-            }
+  
 
 
-     //       delete[] m_lineup;
+         //All the Patients pointed by the elements of the m_lineup array are deleted.
+         //    data file name is deleted.
+         //    the confirmation massage "done!" is printed on the screen at the end.
+
+        for (int i = 0; /*m_lineup[i]*/i < m_lineupSize/*<maxNoOfPatients? m_lineupSize: maxNoOfPatients*/; i++)
+        {
+            delete m_lineup[i];
+
+        }
+
+
+        //    delete[] m_lineup;
         delete[] m_dataFilename;
-        m_dataFilename=nullptr;
-        cout << "done!"<<endl;
+        m_dataFilename = nullptr;
+        cout << "done!" << endl;
     }
-
-   
 
     const Time PreTriage::getWaitTime(const Patient& p) const/////////
     {
+        //  cout << "                                                                          getWaitTime is called      " << endl;
+
         int i(0);
-        unsigned count(-1);/////////////////////////////////////////////////////////////////////////////////-1?
+        unsigned count(-1);
         Time ret;
         for (i = 0; m_lineup[i]; i++)
         {
             if (p.type() == m_lineup[i]->type()) count++;////////////// y not *=            
         }
-      
+
         if (p.type() == 'C')  ret = m_averCovidWait * count;
         else ret = m_averTriageWait * count;
         return Time(ret);///or just ret????
     }
 
-  
 
-    void PreTriage::setAverageWaitTime(const Patient& p)
+
+    void PreTriage::setAverageWaitTime(const Patient& p)//bugyyyyyyyyyyyyyyyyyyyyyyy
     {
-        int ct = getTime();
-        int ptt=(Time)p;
-        int ptn=p.number();
-        int awt(-1);
+        //  cout << "                                                                          setAverageWaitTime is called      " << endl;
 
+        int ct = getTime();
+        int ptt = (Time)p;
+        int ptn = p.number();
+        int awt(-1);
+        awt = ((ct - ptt) + (awt * (ptn - 1))) / ptn;
         if (p.type() == 'C')    awt = m_averCovidWait;
         else awt = m_averTriageWait;
 
-        awt = ((ct - ptt) + (awt * (ptn - 1))) / ptn;
+    
 
     }
-
+   
 
 
     void PreTriage::removePatientFromLineup(int index)// i ended up removing []?????
     {
+        //     cout << "                                                                          removePatientFromLineup is called      " << endl;
+
         removeDynamicElement(m_lineup, index, m_lineupSize);//size?????
     }
 
@@ -126,6 +128,8 @@ namespace sdds {
 
     int PreTriage::indexOfFirstInLine(char type) const
     {
+        //   cout << "                                                                          indexOfFirstInLine is called      " << endl;
+
         int idx(-1);
         for (int i = 0; m_lineup[i]; i++)
         {
@@ -137,86 +141,48 @@ namespace sdds {
         }
         return idx;
     }
-
-
-       /* have a patient - pointer
-            loop from 0 to the maximum number of patients and stop if reading fails
-            read the first character and ignore the comma
-            if the character is 'C'
-                in the patient - pointer instantiate a Covid Patient
-                otherwise, if the character is 'T'
-                in the patient - pointer instantiate a Triage Patient
-                endif
-                If Instantiation happened
-                Set the patient to file IO
-                Read the patient from the file
-                Set the Patient not to do file IO
-                copy the patient pointer to the lineup array of pointers
-                increase the lineup size
-                end if
-                end loop*/
-
-         void PreTriage::load()
+    void PreTriage::load()
     {
-        cout << "                                                                          load is called      " << endl;
-
         cout << "Loading data..." << endl;
+        ifstream fin(m_dataFilename);
+        fin >> m_averCovidWait;
+        fin.ignore();
+        fin >> m_averTriageWait;
+        fin.ignore();
+        Patient *ptr = nullptr;
+        char ch(0);
 
-        ifstream fin;
-        fin.open(m_dataFilename, ios::in);
-    
-        Patient* ptr=nullptr;
-        int i(0);
-        char ch(0);     
-        if (fin.fail())
+        for(int i = 0; i < maxNoOfPatients && /*fin.fail()*/fin/*      */; i++)///////?????????????????????????????????
         {
-            fin.clear();
-            fin.open(m_dataFilename, ios::out);
-            fin.close();
-        }
-        else {
-
-            fin >> m_averCovidWait;
-            fin.ignore();
-            fin >> m_averTriageWait;
-            fin.ignore();
-
-            for (i = 0; i < maxNoOfPatients; i++)
+            //char ch;
+            fin >> ch;
+            if(ch == 'C')  ptr = new CovidPatient();              
+            if(ch == 'T')  ptr = new TriagePatient();
+            if(ptr)
             {
-               
-                fin >> ch;
-                fin.ignore(',');
-                if (ch == 'C')      ptr = new CovidPatient();
-                if (ch == 'T')      ptr = new TriagePatient();
-                if (ptr)
-                {
-                    ptr->fileIO(true);
-                    ptr->csvRead(fin);
-                    ptr->fileIO(false);
-                    m_lineup[i] = ptr;
-                    m_lineupSize++;
-                  //  delete ptr;
-                   // ptr = nullptr;
-                }
-            }
-            if (m_lineupSize >= 100)
-            {
-                cout << "Warning: number of records exceeded 100" << endl
-                    << "100 Records imported...";
-            }
-            else if (m_lineupSize == 0) cout << "No data or bad data file!";
-            else     cout << m_lineupSize << " Records imported...";
-            cout << endl << endl;
-           // fin.close();
+                ptr->fileIO(true);
+                //fin >> *ptr;
+                ptr->csvRead(fin);
 
+                ptr->fileIO(false);
+                m_lineup[i] = ptr;
+                m_lineupSize++;
+            }
         }
+        if (m_lineupSize >= 100)
+            cout << "Warning: number of records exceeded " << maxNoOfPatients << endl;
+        else if(m_lineupSize == 0)
+            cout << "No data or bad data file!" << endl;
+        if(m_lineupSize > 0)
+            cout << m_lineupSize << " Records imported..." << endl;
+        cout << endl;
     }
-          
-
-                     
  
+
     void PreTriage::reg()
     {
+     //   cout << "                                                                          reg is called      " << endl;
+
         if (m_lineupSize >= maxNoOfPatients)
         {
             cout << "Line up full!" << endl;
@@ -225,19 +191,19 @@ namespace sdds {
 
         int selec;
         m_pMenu >> selec;
-     
+
 
         if (selec == 1)                         m_lineup[m_lineupSize] = new CovidPatient;
 
         else if (selec == 2)                    m_lineup[m_lineupSize] = new TriagePatient;
-    
 
-        else if (selec == 0)             
-            return;                  //terminates the function
 
-       
+        else if (selec == 0)                    return;
+                            //terminates the function
+
+
         m_lineup[m_lineupSize]->setArrivalTime();
-        cout << "Please enter patient information: "<<endl;
+        cout << "Please enter patient information: " << endl;
         //(you might need to set the patient not to do File IO)///////////////////////////?????????
         m_lineup[m_lineupSize]->fileIO(false);
         //extract the patient from cin???????????????
@@ -253,49 +219,51 @@ namespace sdds {
         m_lineupSize++;
 
 
-    
     }
 
 
     void PreTriage::admit()
     {
+     //   cout << "                                                                          admit is called      " << endl;
+
         int selec(0);
-        m_pMenu>>selec;
+        m_pMenu >> selec;
         char typ(0);
 
         if (selec == 1) (typ = 'C');///????????
-        else if(selec == 2) (typ = 'T');
+        else if (selec == 2) (typ = 'T');
         else if (selec == 0) exit(0);
 
-        int idx=indexOfFirstInLine(typ);
+        int idx = indexOfFirstInLine(typ);
         if (idx == -1) exit(0);
         cout << endl
             << "******************************************" << endl;
-            //   set the patient not to do File IO???????????????????????????????????????
+        //   set the patient not to do File IO???????????????????????????????????????
         m_lineup[idx]->fileIO(false);
         cout << "Calling for ";
         //                    insert the patient into cout?????
-             m_lineup[idx]->write();
-        cout << "******************************************" << endl<<endl;
+        m_lineup[idx]->write();
+        cout << "******************************************" << endl << endl;
         setAverageWaitTime(*m_lineup[idx]);
         removePatientFromLineup(idx);
+    //    cout << "m_lineupSize /admit                                                               " << m_lineupSize << endl;
 
     }
 
     void PreTriage::run(void)
     {
+      //  cout << "                                                                          run is called      " << endl;
+
         int selec(0);
         do {
 
-            m_appMenu>>selec;
-            if (selec == 0) return;
+            m_appMenu >> selec;
+            if (selec == 0) return;///?????????????????????wat else?????????????????????????????????????????
             if (selec == 1) reg();
             if (selec == 2) admit();
 
         } while (selec != 0);
-       
+
     }
-
-
 
 }

@@ -1,3 +1,18 @@
+//#include "utils.h"
+//#include "IOAble.h"
+//#include <cstring>
+//using namespace std;
+//namespace sdds {
+//    istream &operator>>(istream &left, IOAble &obj)
+//	{
+//		return obj.read(left);
+//	}
+//	ostream &operator<<(ostream &left, const IOAble &obj)
+//	{
+//		return obj.write(left);
+//	}
+//}
+
 /* Citation and Sources...
 Final Project Milestone 4
 Module: IOAble
