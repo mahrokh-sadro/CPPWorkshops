@@ -1,0 +1,2 @@
+C:\Users\AutoLogon\source\repos\ws10\Debug\lab.exe
+C:\Users\AutoLogon\source\repos\ws10\Debug\lab.pdb
