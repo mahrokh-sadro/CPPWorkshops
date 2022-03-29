@@ -1,13 +1,3 @@
-# Project: General Hospital Pre-Triage Application
-- [MS1 V1.0 due March 16th](#milestone-1)
-- [MS2 V1.0 due March 22nd](#milestone-2)
-- [MS3 V1.0 due March 27th](#milestone-3)
-- [MS4 V1.0 due April 2nd](#milestone-4)
-- [MS5 V0.8 (Final Milestone) due Apr 11th](#milestone-5) Preview Version<br />
-  [submission details](#ms5-submission-and-the-due-date)<br/>
-  [initialization sample](#pretriage-constructor)<br />
-  [V1.0 open submission and execution samples](#ms5-submission-and-the-due-date)
-  
 
 
 Because of the pandemic and prevention of the spread of COVID19, hospitals need to screen the patients and separate those in need of COVID-test from others. This has to be done in an orderly fashion by letting the patients know what is the expected wait time and let them know when they can be admitted to prevent lineups. 
